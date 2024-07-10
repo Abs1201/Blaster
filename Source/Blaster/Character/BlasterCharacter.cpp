@@ -9,6 +9,7 @@
 #include "Net/UnrealNetwork.h"
 #include "Blaster/Weapon/Weapon.h"
 #include "Blaster/BalsterComponents/CombatComponent.h"
+#include "Components/CapsuleComponent.h"
 
 
 // Sets default values
@@ -34,10 +35,11 @@ ABlasterCharacter::ABlasterCharacter()
 	OverheadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverheadWidget"));
 	OverheadWidget->SetupAttachment(RootComponent);
 
-	Combat = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
-	Combat->SetIsReplicated(true);
+	Combat2 = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
+	Combat2->SetIsReplicated(true);
 
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 }
 
 void ABlasterCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -49,8 +51,8 @@ void ABlasterCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 void ABlasterCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	if (Combat) {
-		Combat->Character = this;
+	if (Combat2) {
+		Combat2->Character = this;
 	}
 }
 
@@ -119,9 +121,12 @@ void ABlasterCharacter::LookUp(float Value)
 
 void ABlasterCharacter::EquipButtonPressed()
 {
-	if (Combat) {
+	UE_LOG(LogTemp, Warning, TEXT("Equipped"));
+	if (Combat2) {
+		UE_LOG(LogTemp, Warning, TEXT("Equipped2"));
+
 		if (HasAuthority()) {
-			Combat->EquipWeapon(OverlappingWeapon);
+			Combat2->EquipWeapon(OverlappingWeapon);
 		}
 		else {
 			ServerEquipButtonPressed();
@@ -141,22 +146,22 @@ void ABlasterCharacter::CrouchButtonPressed()
 
 void ABlasterCharacter::AimButtonPressed()
 {
-	if (Combat) {
-		Combat->SetAiming(true);
+	if (Combat2) {
+		Combat2->SetAiming(true);
 	}
 }
 
 void ABlasterCharacter::AimButtonReleased()
 {
-	if (Combat) {
-		Combat->SetAiming(false);
+	if (Combat2) {
+		Combat2->SetAiming(false);
 	}
 }
 
 void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
 {
-	if (Combat) {
-		Combat->EquipWeapon(OverlappingWeapon);
+	if (Combat2) {
+		Combat2->EquipWeapon(OverlappingWeapon);
 	}
 }
 
@@ -175,12 +180,12 @@ void ABlasterCharacter::SetOverlappingWeapon(AWeapon* Weapon)
 
 bool ABlasterCharacter::IsWeaponEquipped()
 {
-	return (Combat && Combat->EquippedWeapon);
+	return (Combat2 && Combat2->EquippedWeapon);
 }
 
 bool ABlasterCharacter::IsAiming()
 {
-	return (Combat && Combat->bAiming);
+	return (Combat2 && Combat2->bAiming);
 }
 
 void ABlasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
@@ -192,7 +197,3 @@ void ABlasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
 		LastWeapon->ShowPickupWidget(false); 
 	}
 }
-
-
-
-
