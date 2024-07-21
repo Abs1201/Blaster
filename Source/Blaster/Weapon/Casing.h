@@ -14,12 +14,34 @@ class BLASTER_API ACasing : public AActor
 public:	
 	ACasing();
 
-private:
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* CasingMesh;
+
 protected:
 	virtual void BeginPlay() override;
 
-public:	
+	UFUNCTION()
+	virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+private:
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* CasingMesh;
+
+	UPROPERTY(EditAnywhere)
+	float ShellEjectionImpulse;
+
+	UPROPERTY(EditAnywhere)
+	class USoundCue* ShellSound;
+
+	//float RandomYaw;
+
+	UPROPERTY(EditAnywhere)
+	float MinYaw = -30.f;
+
+	UPROPERTY(EditAnywhere)
+	float MaxYaw = 30.f;
+
+public:
+	//FORCEINLINE float GetRandomYaw() const { return RandomYaw; }
+	FORCEINLINE float GetMinYaw() const { return MinYaw; }
+	FORCEINLINE float GetMaxYaw() const { return MaxYaw; }
 
 };

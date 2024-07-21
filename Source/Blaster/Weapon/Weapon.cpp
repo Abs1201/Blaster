@@ -115,14 +115,19 @@ void AWeapon::Fire(const FVector& HitTarget)
 		const USkeletalMeshSocket* AmmoEjectSocket = GetWeaponMesh()->GetSocketByName(FName("AmmoEject"));
 		if (AmmoEjectSocket) {
 			FTransform SocketTransform = AmmoEjectSocket->GetSocketTransform(WeaponMesh);
-
+			FRotator ShellRotation = SocketTransform.GetRotation().Rotator();
 			UWorld* World = GetWorld();
 			if (World) {
-				World->SpawnActor<ACasing>(
+				ACasing* SpawnedShell = World->SpawnActor<ACasing>(
 					CasingClass,
 					SocketTransform.GetLocation(),
-					SocketTransform.GetRotation().Rotator()
+					ShellRotation
 				);
+				if (SpawnedShell) {
+					float RandomYaw = FMath::FRandRange(SpawnedShell->GetMinYaw(), SpawnedShell->GetMaxYaw());
+					ShellRotation.Yaw += RandomYaw;
+					SpawnedShell->SetActorRotation(ShellRotation);
+				}
 			}
 		}
 	}
