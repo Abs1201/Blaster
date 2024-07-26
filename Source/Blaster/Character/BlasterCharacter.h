@@ -22,14 +22,15 @@ public:
 	void PlayFireMontage(bool bAiming);
 	
 
-	UFUNCTION(NetMulticast, Unreliable)
-	void MulticastHit();
 
 	virtual void OnRep_ReplicatedMovement() override;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	/*UFUNCTION(NetMulticast, Unreliable)
+	void MulticastHit();*/
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
@@ -46,6 +47,9 @@ protected:
 	void FireButtonPressed();
 	void FireButtonReleased();
 
+	UFUNCTION()
+	void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
+	void UpdateHUDHealth();
 private:
 	UPROPERTY(VisibleAnywhere, Category=Camera)
 	class USpringArmComponent* CameraBoom;
@@ -96,6 +100,21 @@ private:
 	float ProxyYaw;
 	float TimeSinceLastMovementReplication;
 	float CalculateSpeed();
+
+	/*
+	* Player health
+	*/
+	UPROPERTY(EditAnywhere, Category = "Player State")
+	float MaxHealth = 100.f;
+
+	UPROPERTY(ReplicatedUsing = OnRep_Health, VisibleAnywhere, Category = "Player State")
+	float Health = 100.f;
+
+	UFUNCTION()
+	void OnRep_Health();
+
+	class ABlasterPlayerController* BlasterPlayerController;
+
 
 public:	
 	//getter, setter
