@@ -143,6 +143,16 @@ void ABlasterCharacter::Destroyed()
 	}
 }
 
+void ABlasterCharacter::Restart()
+{
+	Super::Restart();
+
+	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
+	if (BlasterPlayerController) {
+		BlasterPlayerController->HideHUDDefeatMsg();
+	}
+}
+
 void ABlasterCharacter::MulticastElim_Implementation()
 {
 	bElimmed = true;
@@ -192,6 +202,8 @@ void ABlasterCharacter::BeginPlay()
 	if (HasAuthority()) {
 		OnTakeAnyDamage.AddDynamic(this, &ABlasterCharacter::ReceiveDamage);
 	}
+
+
 }
 
 void ABlasterCharacter::UpdateHUDHealth()
@@ -432,6 +444,12 @@ void ABlasterCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const 
 			BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
 			ABlasterPlayerController* AttackerController = Cast<ABlasterPlayerController>(InstigatorController);
 			BlasterGameMode->PlayerEliminated(this, BlasterPlayerController, AttackerController);
+			//BlasterPlayerController->HideHUDDefeatMsg();
+			//ABlasterPlayerState* AttackerPlayerState = AttackerController ? Cast<ABlasterPlayerState>(AttackerController->PlayerState) : nullptr;
+			//if (AttackerPlayerState) {
+			//	FString PlayerName = AttackerPlayerState->GetPlayerName();
+			//}
+			//BlasterPlayerController->SetHUDDefeatMsg()
 
 		}
 	}
