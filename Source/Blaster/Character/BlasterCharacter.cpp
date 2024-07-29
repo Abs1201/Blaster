@@ -19,6 +19,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Blaster/PlayerState/BlasterPlayerState.h"
 
 // Sets default values
 ABlasterCharacter::ABlasterCharacter()
@@ -201,6 +202,21 @@ void ABlasterCharacter::UpdateHUDHealth()
 	}
 }
 
+//TODO: init score better way .
+void ABlasterCharacter::PollInit()
+{
+	if (BlasterPlayerState == nullptr) {
+		// don't need cast<> cuz we use template<> >???!?!?!?
+		BlasterPlayerState = GetPlayerState<ABlasterPlayerState>();
+		if(BlasterPlayerState)
+		{
+			BlasterPlayerState->AddToScore(0.f);
+			BlasterPlayerState->AddToDefeats(0);
+
+		}
+	}
+}
+
 void ABlasterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -219,6 +235,8 @@ void ABlasterCharacter::Tick(float DeltaTime)
 	//if (OverlappingWeapon) {
 	//	OverlappingWeapon->ShowPickupWidget(true);
 	//}
+	//TODO: delete this...plz
+	PollInit();
 
 }
 
