@@ -40,6 +40,7 @@ protected:
 
 	void Fire();
 
+
 	UFUNCTION(Server, Reliable)
 	void ServerFire(const FVector_NetQuantize& TraceHitTarget);
 
@@ -70,6 +71,8 @@ private:
 	float AimWalkSpeed;
 
 	bool bFireButtonPressed;
+
+	bool bRunButtonPressed;
 
 	//HUD and crosshairs
 	float CrosshairVelocityFactor;

@@ -437,11 +437,13 @@ void ABlasterCharacter::FireButtonReleased()
 
 void ABlasterCharacter::RunButtonPressed()
 {
+	bRunButtonPressed = true;
 	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
 }
 
 void ABlasterCharacter::RunButtonReleased()
 {
+	bRunButtonPressed = false;
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
 }

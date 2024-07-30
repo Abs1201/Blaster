@@ -100,6 +100,8 @@ void UCombatComponent::Fire()
 	
 }
 
+
+
 void UCombatComponent::TraceUnderCrosshairs(FHitResult& TraceHitResult)
 {
 	FVector2D ViewportSize;

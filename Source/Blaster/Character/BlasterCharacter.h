@@ -126,6 +126,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float RunSpeed = 1200.f;
 
+	bool bRunButtonPressed;
 
 	/*
 	* Player health
@@ -193,6 +194,7 @@ public:
 	void SetOverlappingWeapon(AWeapon* Weapon);
 	bool IsWeaponEquipped();
 	bool IsAiming();
+	bool IsRunning() { return bRunButtonPressed; }
 	
 	FORCEINLINE float GetAO_Yaw() const { return AO_Yaw; }
 	FORCEINLINE float GetAO_Pitch() const { return AO_Pitch; }

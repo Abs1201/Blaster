@@ -98,7 +98,7 @@ void ABlasterPlayerController::SetHUDCarriedAmmo(int32 Ammo)
 		BlasterHUD->CharacterOverlay->CarriedAmmoAmount;
 	if (bHUDValid) {
 		FString AmmoText = FString::Printf(TEXT("%d"), Ammo);
-		BlasterHUD->CharacterOverlay->WeaponAmmoAmount->SetText(FText::FromString(AmmoText));
+		BlasterHUD->CharacterOverlay->CarriedAmmoAmount->SetText(FText::FromString(AmmoText));
 
 	}
 }
