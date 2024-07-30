@@ -21,6 +21,8 @@ public:
 	void SetHUDDefeatMsg(FString AttackerName);
 	void HideHUDDefeatMsg();
 	void SetHUDWeaponAmmo(int32 Ammo);
+	void SetHUDCarriedAmmo(int32 Ammo);
+
 	virtual void OnPossess(APawn* InPawn) override;
 
 protected:

@@ -123,7 +123,7 @@ void AWeapon::OnRep_WeaponState()
 
 void AWeapon::SpendRound()
 {
-	Ammo = FMath::Clamp(Ammo, -1, 0, MagCapacity);
+	Ammo = FMath::Clamp(Ammo - 1, 0, MagCapacity);
 	SetHUDAmmo();
 }
 
