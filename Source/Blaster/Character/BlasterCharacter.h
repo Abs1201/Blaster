@@ -58,6 +58,8 @@ protected:
 	virtual void Jump() override;
 	void FireButtonPressed();
 	void FireButtonReleased();
+	void RunButtonPressed();
+	void RunButtonReleased();
 
 	UFUNCTION()
 	void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
@@ -117,6 +119,13 @@ private:
 	float ProxyYaw;
 	float TimeSinceLastMovementReplication;
 	float CalculateSpeed();
+
+	UPROPERTY(EditAnywhere)
+	float WalkSpeed = 600.f;
+
+	UPROPERTY(EditAnywhere)
+	float RunSpeed = 1200.f;
+
 
 	/*
 	* Player health

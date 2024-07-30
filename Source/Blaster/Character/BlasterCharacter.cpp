@@ -272,8 +272,8 @@ void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("Aim", IE_Released, this, &ABlasterCharacter::AimButtonReleased);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ABlasterCharacter::FireButtonPressed);
 	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ABlasterCharacter::FireButtonReleased);
-
-
+	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ABlasterCharacter::RunButtonPressed);
+	PlayerInputComponent->BindAction("Run", IE_Released, this, &ABlasterCharacter::RunButtonReleased);
 }
 
 void ABlasterCharacter::MoveForward(float Value)
@@ -433,6 +433,17 @@ void ABlasterCharacter::FireButtonReleased()
 	if (Combat) {
 		Combat->FireButtonPressed(false);
 	}
+}
+
+void ABlasterCharacter::RunButtonPressed()
+{
+	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+}
+
+void ABlasterCharacter::RunButtonReleased()
+{
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+
 }
 
 void ABlasterCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
