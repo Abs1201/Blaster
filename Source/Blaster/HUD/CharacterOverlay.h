@@ -34,6 +34,9 @@ public:
 	UTextBlock* AttackerText;
 
 
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* WeaponAmmoAmount;
+
 
 
 };
