@@ -117,6 +117,8 @@ void ABlasterCharacter::PlayElimMontage()
 	}
 }
 
+
+
 void ABlasterCharacter::PlayHitReactMontage()
 {
 	if (Combat == nullptr || Combat->EquippedWeapon == nullptr) return;
@@ -458,14 +460,24 @@ void ABlasterCharacter::FireButtonReleased()
 
 void ABlasterCharacter::RunButtonPressed()
 {
-	bRunButtonPressed = true;
 	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+
+	if (Combat) {
+		Combat->Run(true);
+	}
+	bRunButtonPressed = true;
+
+
 }
 
 void ABlasterCharacter::RunButtonReleased()
 {
-	bRunButtonPressed = false;
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+
+	if (Combat) {
+		Combat->Run(false);
+	}
+	bRunButtonPressed = false;
 
 }
 
@@ -473,7 +485,6 @@ void ABlasterCharacter::ReloadButtonPressed()
 {
 	if (Combat) {
 		Combat->Reload();
-		UE_LOG(LogTemp, Warning, TEXT("ReloadButtonPressed()"));
 	}
 }
 
@@ -550,6 +561,7 @@ float ABlasterCharacter::CalculateSpeed()
 	Velocity.Z = 0.f;
 	return Velocity.Size();
 }
+
 
 void ABlasterCharacter::OnRep_Health()
 {

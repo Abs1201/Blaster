@@ -116,10 +116,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = Combat)
 	UAnimMontage* ElimMontage;
 
-	
+	//UPROPERTY(EditAnywhere, Category = Combat)
+	//UAnimMontage* RunMontage;
 
-	UPROPERTY(EditAnywhere, Category = Combat)
-	UAnimMontage* RunMontage;
 
 	void PlayHitReactMontage();
 
@@ -143,6 +142,8 @@ private:
 	float RunSpeed = 1200.f;
 
 	bool bRunButtonPressed;
+
+
 
 	/*
 	* Player health
