@@ -300,6 +300,17 @@ void UCombatComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 
 }
 
+void UCombatComponent::Run(bool bPressed)
+{
+	bRunButtonPressed = bPressed;
+	if (bPressed && CombatState != ECombatState::ECS_Running) {
+		CombatState = ECombatState::ECS_Running;
+	}
+	else {
+		CombatState = ECombatState::ECS_Unoccupied;
+	}
+}
+
 void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 {
 	if (Character == nullptr || WeaponToEquip == nullptr) return;
@@ -331,11 +342,8 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 
 void UCombatComponent::Reload()
 {
-	UE_LOG(LogTemp, Warning, TEXT("CarriedAmmo: %d"), CarriedAmmo);
-
 	if (CarriedAmmo > 0 && CombatState != ECombatState::ECS_Reloading) {
 		ServerReload();
-
 	}
 }
 
@@ -422,3 +430,4 @@ void UCombatComponent::OnRep_EquippedWeapon()
 		Character->bUseControllerRotationYaw = true;
 	}
 }
+

@@ -459,12 +459,21 @@ void ABlasterCharacter::FireButtonReleased()
 void ABlasterCharacter::RunButtonPressed()
 {
 	bRunButtonPressed = true;
+
+	if (Combat) {
+		Combat->Run(true);
+	}
 	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+
 }
 
 void ABlasterCharacter::RunButtonReleased()
 {
 	bRunButtonPressed = false;
+
+	if (Combat) {
+		Combat->Run(false);
+	}
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
 }
@@ -473,7 +482,6 @@ void ABlasterCharacter::ReloadButtonPressed()
 {
 	if (Combat) {
 		Combat->Reload();
-		UE_LOG(LogTemp, Warning, TEXT("ReloadButtonPressed()"));
 	}
 }
 
