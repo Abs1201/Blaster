@@ -62,6 +62,8 @@ protected:
 
 	void HandleReload();
 
+	int32 AmountToReload();
+
 private:
 	UPROPERTY()
 	class ABlasterCharacter* Character;
@@ -136,7 +138,7 @@ private:
 	TMap<EWeaponType, int32> CarriedAmmoMap;
 
 	UPROPERTY(EditAnywhere)
-	int32 StartingARAmmo = 30;
+	int32 StartingARAmmo = 300;
 
 	void InitializeCarriedAmmo();
 
@@ -145,6 +147,8 @@ private:
 
 	UFUNCTION()
 	void OnRep_CombatState();
+
+	void UpdateAmmoValues();
 
 public:	
 	
