@@ -25,6 +25,8 @@ public:
 
 
 	void EquipWeapon(class AWeapon* WeaponToEquip);
+	void Reload();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -37,8 +39,9 @@ protected:
 	void OnRep_EquippedWeapon();
 
 	void FireButtonPressed(bool bPressed);
-
 	void Fire();
+
+
 
 
 	UFUNCTION(Server, Reliable)
@@ -50,6 +53,9 @@ protected:
 	void TraceUnderCrosshairs(FHitResult& TraceHitResult);
 
 	void SetHUDCrosshairs(float DeltaTime);
+
+	UFUNCTION(Sever, Reliable)
+	void ServerReload();
 
 private:
 	UPROPERTY()

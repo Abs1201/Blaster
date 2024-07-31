@@ -60,6 +60,8 @@ protected:
 	void FireButtonReleased();
 	void RunButtonPressed();
 	void RunButtonReleased();
+	void ReloadButtonPressed();
+
 
 	UFUNCTION()
 	void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
