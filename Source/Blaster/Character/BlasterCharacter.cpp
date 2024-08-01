@@ -460,18 +460,22 @@ void ABlasterCharacter::FireButtonReleased()
 
 void ABlasterCharacter::RunButtonPressed()
 {
-	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+	bRunButtonPressed = true;
 
 	if (Combat) {
 		Combat->Run(true);
 	}
-	bRunButtonPressed = true;
-
+	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
 
 }
 
 void ABlasterCharacter::RunButtonReleased()
 {
+	bRunButtonPressed = false;
+
+	if (Combat) {
+		Combat->Run(false);
+	}
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
 	if (Combat) {
