@@ -141,7 +141,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float RunSpeed = 1200.f;
 
-	bool bRunButtonPressed;
+	bool bRunButtonPressed=false;
 
 
 
