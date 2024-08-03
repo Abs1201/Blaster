@@ -27,6 +27,20 @@ void ABlasterGameMode::BeginPlay()
 	LevelStartingTime = GetWorld()->GetTimeSeconds();
 }
 
+void ABlasterGameMode::OnMatchStateSet()
+{
+	Super::OnMatchStateSet();
+
+	//loop all controllers in game
+	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It) {
+		ABlasterPlayerController* BlasterPlayer = Cast<ABlasterPlayerController>(*It);
+		if (BlasterPlayer) {
+			BlasterPlayer->OnMatchStateSet(MatchState);
+		}
+	}
+
+}
+
 ABlasterGameMode::ABlasterGameMode()
 {
 	bDelayedStart = true;
