@@ -33,7 +33,7 @@ public:
 	virtual float GetServerTime(); // Synced with server world clock
 	virtual void ReceivedPlayer() override; // Sync with server clock asap
 	void OnMatchStateSet(FName State);
-
+	void HandleMatchHasStarted();
 protected:
 	virtual void BeginPlay() override;
 	void PollInit();
@@ -56,6 +56,7 @@ protected:
 
 	float TimeSyncRunningTime = 0.f;
 	void CheckTimeSync(float DeltaTime);
+	
 
 private:
 	UPROPERTY()
