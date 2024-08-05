@@ -16,7 +16,7 @@ class BLASTER_API AProjectileWeapon : public AWeapon
 
 public:
 	virtual void Fire(const FVector& HitTarget) override;
-
+	virtual float GetZoomedFOV() const override;
 private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AProjectile> ProjectileClass;

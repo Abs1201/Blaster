@@ -141,6 +141,32 @@ void ABlasterCharacter::OnRep_ReplicatedMovement()
 	TimeSinceLastMovementReplication = 0.f;
 }
 
+
+
+void ABlasterCharacter::Destroyed()
+{
+	Super::Destroyed();
+
+	if (ElimBotComponent) {
+		ElimBotComponent->DestroyComponent();
+	}
+	ABlasterGameMode* BlasterGameMode = Cast<ABlasterGameMode>(UGameplayStatics::GetGameMode(this));
+	bool bMatchNotInProgress = BlasterGameMode && BlasterGameMode->GetMatchState() != MatchState::InProgress;
+	if (Combat && Combat->EquippedWeapon && bMatchNotInProgress) {
+		Combat->EquippedWeapon->Destroy();
+	}
+}
+
+void ABlasterCharacter::Restart()
+{
+	Super::Restart();
+
+	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
+	if (BlasterPlayerController) {
+		BlasterPlayerController->HideHUDDefeatMsg();
+	}
+}
+
 void ABlasterCharacter::Elim()
 {
 	if (Combat && Combat->EquippedWeapon) {
@@ -154,28 +180,6 @@ void ABlasterCharacter::Elim()
 		ElimDelay
 	);
 
-}
-
-void ABlasterCharacter::Destroyed()
-{
-	Super::Destroyed();
-
-	if (ElimBotComponent) {
-		ElimBotComponent->DestroyComponent();
-	}
-	if (Combat && Combat->EquippedWeapon) {
-		Combat->EquippedWeapon->Destroy();
-	}
-}
-
-void ABlasterCharacter::Restart()
-{
-	Super::Restart();
-
-	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
-	if (BlasterPlayerController) {
-		BlasterPlayerController->HideHUDDefeatMsg();
-	}
 }
 
 void ABlasterCharacter::MulticastElim_Implementation()
@@ -198,6 +202,9 @@ void ABlasterCharacter::MulticastElim_Implementation()
 	GetCharacterMovement()->DisableMovement();
 	GetCharacterMovement()->StopMovementImmediately();
 	bDisableGameplay = true;
+	if (Combat) {
+		Combat->FireButtonPressed(false);
+	}
 	//Disable Collision
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);

@@ -35,3 +35,22 @@ void AProjectileWeapon::Fire(const FVector& HitTarget)
 
 
 }
+
+float AProjectileWeapon::GetZoomedFOV() const
+{
+	Super::GetZoomedFOV();
+
+	EWeaponType TypeofWeapon = GetWeaponType();
+	switch (TypeofWeapon) {
+	case EWeaponType::EWT_AssaultRifle:
+		UE_LOG(LogTemp, Warning, TEXT("aaa"));
+		return 45.f;
+	case EWeaponType::EWT_SniperRifle:
+		UE_LOG(LogTemp, Warning, TEXT("bbb"));
+
+		return 10.f;
+	default:
+		return 30.f;
+	}
+	
+}

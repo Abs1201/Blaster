@@ -131,7 +131,7 @@ public:
 	void  SetWeaponState(EWeaponState State);
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }
 	FORCEINLINE USkeletalMeshComponent* GetWeaponMesh() const { return WeaponMesh; }
-	FORCEINLINE float GetZoomedFOV() const { return ZoomedFOV; }
+	virtual float GetZoomedFOV() const;
 	FORCEINLINE float GetZoomInterpSpeed() const { return ZoomInterpSpeed; }
 	bool IsEmpty();
 	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponType; }

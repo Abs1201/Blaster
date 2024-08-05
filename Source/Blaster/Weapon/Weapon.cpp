@@ -155,6 +155,11 @@ void AWeapon::SetWeaponState(EWeaponState State)
 	}
 }
 
+float AWeapon::GetZoomedFOV() const
+{
+	return 30.f;
+}
+
 bool AWeapon::IsEmpty()
 {
 
