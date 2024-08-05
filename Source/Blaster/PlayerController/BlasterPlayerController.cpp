@@ -233,9 +233,9 @@ void ABlasterPlayerController::ServerCheckMatchState_Implementation()
 	if (GameMode) {
 		WarmupTime = GameMode->WarmupTime;
 		MatchTime = GameMode->MatchTime;
+		CooldownTime = GameMode->CooldownTime;
 		LevelStartingTime = GameMode->LevelStartingTime;
 		MatchState = GameMode->GetMatchState();
-		CooldownTime = GameMode->CooldownTime;
 		ClientJoinMidGame(MatchState, WarmupTime, MatchTime, CooldownTime, LevelStartingTime);
 
 		
@@ -250,9 +250,9 @@ void ABlasterPlayerController::ClientJoinMidGame_Implementation(FName StateOfMat
 {
 	WarmupTime = Warmup;
 	MatchTime = Match;
+	CooldownTime = Cooldown;
 	LevelStartingTime = StartingTime;
 	MatchState = StateOfMatch;
-	CooldownTime = Cooldown;
 
 	OnMatchStateSet(MatchState);
 
@@ -319,14 +319,14 @@ void ABlasterPlayerController::OnMatchStateSet(FName State)
 {
 	MatchState = State;
 
-	if (MatchState == MatchState::WaitingToStart) {
-		//BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
-		//if (BlasterHUD) {
-		//	BlasterHUD->AddAnouncement();
-		//}
-	}
+	//if (MatchState == MatchState::WaitingToStart) {
+	//	//BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+	//	//if (BlasterHUD) {
+	//	//	BlasterHUD->AddAnouncement();
+	//	//}
+	//}
 
-	else if (MatchState == MatchState::InProgress) {
+	if (MatchState == MatchState::InProgress) {
 		HandleMatchHasStarted();
 	}
 	else if (MatchState == MatchState::Cooldown) {
