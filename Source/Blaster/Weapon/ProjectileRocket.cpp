@@ -7,7 +7,8 @@
 #include "NiagaraComponent.h"
 #include "Sound/SoundCue.h"
 #include "Components/BoxComponent.h"
-
+#include "Sound/SoundCue.h"
+#include "Components/AudioComponent.h"
 
 
 void AProjectileRocket::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -47,14 +48,17 @@ void AProjectileRocket::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, 
 	if (ImpactSound) {
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
 	}
-	if (RocketMesh) {
-		RocketMesh->SetVisibility(false);
+	if (ProjectileMesh) {
+		ProjectileMesh->SetVisibility(false);
 	}
 	if (CollisionBox) {
 		CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
-	if (TrailSystemComponent && TrailSystemComponent->GetSystemInstanceController()) {
-		TrailSystemComponent->GetSystemInstanceController()->Deactivate();
+	if (TrailSystemComponent && TrailSystemComponent->GetSystemInstance()) {
+		TrailSystemComponent->GetSystemInstance()->Deactivate();
+	}
+	if (ProjectileLoopComponent && ProjectileLoopComponent->IsPlaying()) {
+		ProjectileLoopComponent->Stop();
 	}
 }
 
@@ -74,6 +78,22 @@ void AProjectileRocket::BeginPlay()
 			GetActorLocation(),
 			GetActorRotation(),
 			EAttachLocation::KeepWorldPosition,
+			false
+		);
+	}
+	if (ProjectileLoop && LoopingSoundAttenuation) {
+		ProjectileLoopComponent = UGameplayStatics::SpawnSoundAttached(
+			ProjectileLoop,
+			GetRootComponent(),
+			FName(),
+			GetActorLocation(),
+			EAttachLocation::KeepWorldPosition,
+			false,
+			1.f,
+			1.f,
+			0.f,
+			LoopingSoundAttenuation,
+			(USoundConcurrency*)nullptr,
 			false
 		);
 	}

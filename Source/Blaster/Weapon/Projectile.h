@@ -37,6 +37,10 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	class UBoxComponent* CollisionBox;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* ProjectileMesh;
+
 private:
 	
 
@@ -48,11 +52,6 @@ private:
 
 	UPROPERTY()
 	class UParticleSystemComponent* TracerComponent;
-
-
-
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* ProjectileMesh;
 
 	
 
