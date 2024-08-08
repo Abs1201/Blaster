@@ -15,6 +15,8 @@ class BLASTER_API AProjectileRocket : public AProjectile
 	GENERATED_BODY()
 	
 public:
+	AProjectileRocket();
+
 	UPROPERTY(EditAnywhere)
 	float MinDamage = 10.f;
 
@@ -34,6 +36,8 @@ protected:
 	virtual void BeginPlay() override;
 	void DestroyTimerFinished();
 
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* ProjectileMesh;
 
 	UPROPERTY(EditAnywhere)
 	class UNiagaraSystem* TrailSystem;
@@ -49,6 +53,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	USoundAttenuation* LoopingSoundAttenuation;
+
+	UPROPERTY(VisibleAnywhere)
+	class URocketMovementComponent* RocketMovementComponent;
 
 private:
 

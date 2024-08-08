@@ -16,7 +16,7 @@ ACasing::ACasing()
 	CasingMesh->SetSimulatePhysics(true);
 	CasingMesh->SetEnableGravity(true);
 	CasingMesh->SetNotifyRigidBodyCollision(true);
-	ShellEjectionImpulse = 5.f;
+	ShellEjectionImpulse = 50.f;
 
 	//RandomYaw = FMath::FRandRange(MinYaw, MaxYaw);
 }

@@ -14,9 +14,6 @@ class BLASTER_API AProjectile : public AActor
 public:	
 	AProjectile();
 
-
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	virtual void Destroyed() override;
@@ -38,14 +35,11 @@ protected:
 	UPROPERTY(EditAnywhere)
 	class UBoxComponent* CollisionBox;
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* ProjectileMesh;
 
-private:
-	
 
 	UPROPERTY(VisibleAnywhere)
 	class UProjectileMovementComponent* ProjectileMovementComponent;
+private:
 
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* Tracer;	
