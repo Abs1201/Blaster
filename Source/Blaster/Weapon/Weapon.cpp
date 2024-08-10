@@ -178,7 +178,7 @@ void AWeapon::OnRep_WeaponState()
 
 float AWeapon::GetZoomedFOV() const
 {
-	return 30.f;
+	return ZoomedFOV;
 }
 
 bool AWeapon::IsEmpty()
