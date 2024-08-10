@@ -20,10 +20,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MinDamage = 10.f;
 
-	UPROPERTY(EditAnywhere)
-	float InnerRadius = 200.f;
-	UPROPERTY(EditAnywhere)
-	float OuterRdaius = 500.f;
+
 	UPROPERTY(EditAnywhere)
 	float DamageFalloff = 1.f;
 	UPROPERTY(EditAnywhere)
@@ -34,16 +31,10 @@ public:
 protected:
 	virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) override;
 	virtual void BeginPlay() override;
-	void DestroyTimerFinished();
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* ProjectileMesh;
 
-	UPROPERTY(EditAnywhere)
-	class UNiagaraSystem* TrailSystem;
 
-	UPROPERTY()
-	class UNiagaraComponent* TrailSystemComponent;
+
 
 	UPROPERTY(EditAnywhere)
 	USoundCue* ProjectileLoop;
@@ -59,9 +50,6 @@ protected:
 
 private:
 
-	FTimerHandle DestroyTimer;
 
-	UPROPERTY(EditAnywhere)
-	float DestroyTime = 3.f;
 
 };
