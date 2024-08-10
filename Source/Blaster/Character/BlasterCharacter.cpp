@@ -242,7 +242,17 @@ void ABlasterCharacter::MulticastElim_Implementation()
 			GetActorLocation()
 			);
 	}
+
+	bool bHidSniperScope = IsLocallyControlled() &&
+		Combat &&
+		Combat->bAiming &&
+		Combat->EquippedWeapon &&
+		Combat->EquippedWeapon->GetWeaponType() == EWeaponType::EWT_SniperRifle;
+	if (bHidSniperScope) {
+		ShowSniperScopeWidget(false);
+	}
 }
+
 
 void ABlasterCharacter::BeginPlay()
 {
