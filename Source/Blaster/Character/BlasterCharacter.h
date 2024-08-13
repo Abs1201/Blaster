@@ -25,6 +25,7 @@ public:
 	void PlayFireMontage(bool bAiming);
 	void PlayReloadMontage();
 	void PlayElimMontage();
+	void PlayThrowGrenadeMontage();
 
 	virtual void OnRep_ReplicatedMovement() override;
 
@@ -67,6 +68,7 @@ protected:
 	void RunButtonPressed();
 	void RunButtonReleased();
 	void ReloadButtonPressed();
+	void GrenadeButtonPressed();
 
 
 	UFUNCTION()
@@ -120,6 +122,10 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	UAnimMontage* ElimMontage;
+
+	UPROPERTY(EditAnywhere, Category = Combat)
+	UAnimMontage* ThrowGrenadeMontage;
+
 
 	//UPROPERTY(EditAnywhere, Category = Combat)
 	//UAnimMontage* RunMontage;

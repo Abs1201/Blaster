@@ -64,6 +64,11 @@ Textures for the weapon crosshairs
 	UPROPERTY(EditAnywhere)
 	class USoundCue* EquipSound;
 
+	/*
+	* Enable or disbale custom depth
+	*/
+	void EnableCustomDepth(bool bEnable);
+
 protected:
 	virtual void BeginPlay() override;
 

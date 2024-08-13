@@ -25,6 +25,7 @@ public:
 	void Run(bool bPressed);
 
 	void EquipWeapon(class AWeapon* WeaponToEquip);
+	void ReloadEmptyWeapon();
 	void Reload();
 
 	UFUNCTION(BlueprintCallable)
@@ -35,6 +36,9 @@ public:
 	void ShotgunShellReload();
 
 	void JumpToShotgunEnd();
+	
+	UFUNCTION(BlueprintCallable)
+	void ThrowGrenadeFinished();
 
 protected:
 	// Called when the game starts
@@ -68,6 +72,17 @@ protected:
 	void HandleReload();
 
 	int32 AmountToReload();
+
+	void ThrowGrenade();
+
+	UFUNCTION(Server, Reliable)
+	void ServerThrowGrenade();
+
+	void DropEquippedWeapon();
+	void AttachActorToRightHand(AActor* ActorToAttach);
+	void AttachActorToLeftHand(AActor* ActorToAttach);
+	void UpdateCarriedAmmo();
+	void PlayEquipWeaponSound();
 
 private:
 	UPROPERTY()
