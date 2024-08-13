@@ -217,6 +217,12 @@ private:
 	void UpdateDissolveMaterial(float DissolveValue);
 	void StartDissolve();
 
+	/*
+	* Attached Grenade
+	*/
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* AttachedGrenade;
+
 public:	
 	//getter, setter
 	void SetOverlappingWeapon(AWeapon* Weapon);
