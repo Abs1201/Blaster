@@ -277,7 +277,9 @@ void ABlasterCharacter::BeginPlay()
 	if (HasAuthority()) {
 		OnTakeAnyDamage.AddDynamic(this, &ABlasterCharacter::ReceiveDamage);
 	}
-
+	if (AttachedGrenade) {
+		AttachedGrenade->SetVisibility(false);
+	}
 
 }
 

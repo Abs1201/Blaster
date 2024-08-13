@@ -40,6 +40,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ThrowGrenadeFinished();
 
+	UFUNCTION(BlueprintCallable)
+	void LaunchGrenade();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -83,7 +86,7 @@ protected:
 	void AttachActorToLeftHand(AActor* ActorToAttach);
 	void UpdateCarriedAmmo();
 	void PlayEquipWeaponSound();
-
+	void ShowAttachedGrenade(bool bShowGrenade);
 private:
 	UPROPERTY()
 	class ABlasterCharacter* Character;
