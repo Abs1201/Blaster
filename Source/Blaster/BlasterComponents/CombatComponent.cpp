@@ -29,6 +29,18 @@ UCombatComponent::UCombatComponent()
 }
 
 
+void UCombatComponent::PickupAmmo(EWeaponType WeaponType, int32 AmmoAmount)
+{
+	if (CarriedAmmoMap.Contains(WeaponType)) {
+		CarriedAmmoMap[WeaponType] += FMath::Clamp(CarriedAmmoMap[WeaponType] + AmmoAmount, 0, MaxCarriedAmmo);
+
+		UpdateCarriedAmmo();
+	}
+	if (EquippedWeapon && EquippedWeapon->IsEmpty() && EquippedWeapon->GetWeaponType() == WeaponType) {
+		Reload();
+	}
+}
+
 // Called when the game starts
 void UCombatComponent::BeginPlay()
 {
@@ -371,7 +383,7 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 	UpdateCarriedAmmo();
 	PlayEquipWeaponSound();
 	
-	//121. auto reload
+	//121. auto reload weapon when equipped weapon has 0 ammo.
 	ReloadEmptyWeapon();
 
 	Character->GetCharacterMovement()->bOrientRotationToMovement = false;
