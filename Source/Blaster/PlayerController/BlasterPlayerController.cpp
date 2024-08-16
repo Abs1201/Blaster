@@ -300,7 +300,6 @@ void ABlasterPlayerController::PollInit()
 					SetHUDGrenades(BlasterCharacter->GetCombat()->GetGrenades());
 				}
 
-				SetHUDGrenades(HUDGrenades);
 			}
 		}
 	}
