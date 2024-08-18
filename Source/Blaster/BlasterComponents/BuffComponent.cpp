@@ -28,6 +28,9 @@ void UBuffComponent::ReplenishShield(float ShieldAmount, float ReplenishTime)
 	bReplenishingShield = true;
 	ShieldReplenishRate = ShieldAmount / ReplenishTime;
 	ShieldReplenishAmount += ShieldAmount;
+	UE_LOG(LogTemp, Warning, TEXT("shieldRate: %f"), ShieldReplenishRate);
+	UE_LOG(LogTemp, Warning, TEXT("shieldAmount: %f"), ShieldReplenishAmount);
+
 }
 
 
@@ -67,7 +70,7 @@ void UBuffComponent::HealRampUp(float DeltaTime)
 
 void UBuffComponent::ShieldRampUp(float DeltaTime)
 {
-	if (!bHealing || Character == nullptr || Character->IsElimmed())return;
+	if (!bReplenishingShield || Character == nullptr || Character->IsElimmed())return;
 
 	const float ReplenishThisFrame = ShieldReplenishRate * DeltaTime;
 	Character->SetShield(FMath::Clamp(Character->GetShield() + ReplenishThisFrame, 0.f, Character->GetMaxShield()));
