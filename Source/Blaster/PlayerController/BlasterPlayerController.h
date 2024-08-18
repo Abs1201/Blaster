@@ -91,15 +91,21 @@ private:
 
 	UPROPERTY()
 	class UCharacterOverlay* CharacterOverlay;
-	bool bInitializeCharaterOverlay = false;
-
+	bool bInitializeHealth = false;
 	float HUDHealth;
 	float HUDMaxHealth;
+
+	bool bInitializeShield = false;
 	float HUDShield;
 	float HUDMaxShield;
-	float HUDScore;
 
+	bool bInitializeScore = false;
+	float HUDScore;
+	
+	bool bInitializeDefeats = false;
 	int32 HUDDefeats;
+
+	bool bInitializeGrenades = false;
 	int32 HUDGrenades;
 	
 };

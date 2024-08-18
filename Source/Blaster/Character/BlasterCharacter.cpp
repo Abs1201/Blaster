@@ -285,6 +285,8 @@ void ABlasterCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	UpdateHUDHealth();
+	UpdateHUDShield();
+
 	if (HasAuthority()) {
 		OnTakeAnyDamage.AddDynamic(this, &ABlasterCharacter::ReceiveDamage);
 	}
@@ -306,7 +308,7 @@ void ABlasterCharacter::UpdateHUDShield()
 {
 	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
 	if (BlasterPlayerController) {
-		BlasterPlayerController->SetHUDHealth(Shield, MaxShield);
+		BlasterPlayerController->SetHUDShield(Shield, MaxShield);
 	}
 }
 
