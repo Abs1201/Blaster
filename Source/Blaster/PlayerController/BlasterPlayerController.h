@@ -107,5 +107,10 @@ private:
 
 	bool bInitializeGrenades = false;
 	int32 HUDGrenades;
+
+	float HUDCarriedAmmo;
+	bool bInitializeCarriedAmmo = false;
+	float HUDWeaponAmmo;
+	bool bInitializeWeaponAmmo = false;
 	
 };

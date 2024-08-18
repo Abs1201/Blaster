@@ -69,6 +69,7 @@ Textures for the weapon crosshairs
 	*/
 	void EnableCustomDepth(bool bEnable);
 
+	bool bDestroyWeapon = false;
 protected:
 	virtual void BeginPlay() override;
 
