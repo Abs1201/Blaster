@@ -75,6 +75,8 @@ void ABlasterCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME_CONDITION(ABlasterCharacter, OverlappingWeapon, COND_AutonomousOnly);
 	DOREPLIFETIME(ABlasterCharacter, Health);
+	DOREPLIFETIME(ABlasterCharacter, Shield);
+
 	DOREPLIFETIME(ABlasterCharacter, bDisableGameplay);
 
 }
@@ -297,6 +299,14 @@ void ABlasterCharacter::UpdateHUDHealth()
 	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
 	if (BlasterPlayerController) {
 		BlasterPlayerController->SetHUDHealth(Health, MaxHealth);
+	}
+}
+
+void ABlasterCharacter::UpdateHUDShield()
+{
+	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
+	if (BlasterPlayerController) {
+		BlasterPlayerController->SetHUDHealth(Shield, MaxShield);
 	}
 }
 
@@ -599,7 +609,13 @@ void ABlasterCharacter::GrenadeButtonPressed()
 void ABlasterCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
 {
 	if (bElimmed) return;
-	Health = FMath::Clamp(Health - Damage, 0.f, MaxHealth);
+	if (Shield > 0.f) {
+		Shield = FMath::Clamp(Shield - Damage, 0.f, MaxShield);
+	}
+	else {
+		Health = FMath::Clamp(Health - Damage, 0.f, MaxHealth);
+	}
+	UpdateHUDShield();
 	UpdateHUDHealth();
 	PlayHitReactMontage();
 
@@ -679,6 +695,14 @@ void ABlasterCharacter::OnRep_Health(float LastHealth)
 		PlayHitReactMontage();
 	}
 	
+}
+
+void ABlasterCharacter::OnRep_Shield(float LastShield)
+{
+	UpdateHUDShield();
+	if (Shield < LastShield) {
+		PlayHitReactMontage();
+	}
 }
 
 void ABlasterCharacter::ElimTimerFinished()
