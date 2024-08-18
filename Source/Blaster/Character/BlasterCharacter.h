@@ -181,8 +181,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Player State")
 	float MaxShield = 100.f;
 
-	UPROPERTY(ReplicatedUsing = OnRep_Shield, VisibleAnywhere, Category = "Player State")
-	float Shield = 100.f;
+	UPROPERTY(ReplicatedUsing = OnRep_Shield, EditAnywhere, Category = "Player State")
+	float Shield = 10.f;
 
 	UFUNCTION()
 	void OnRep_Shield(float LastShield);
