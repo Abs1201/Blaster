@@ -290,9 +290,7 @@ void ABlasterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	SpawnDefaultWeapon();
-	UpdateHUDAmmo();
-	UpdateHUDHealth();
-	UpdateHUDShield();
+
 
 	if (HasAuthority()) {
 		OnTakeAnyDamage.AddDynamic(this, &ABlasterCharacter::ReceiveDamage);
@@ -300,6 +298,10 @@ void ABlasterCharacter::BeginPlay()
 	if (AttachedGrenade) {
 		AttachedGrenade->SetVisibility(false);
 	}
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDAmmo);
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDHealth);
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDShield);
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDGrenade);
 
 }
 
@@ -315,6 +317,7 @@ void ABlasterCharacter::UpdateHUDShield()
 {
 	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
 	if (BlasterPlayerController) {
+
 		BlasterPlayerController->SetHUDShield(Shield, MaxShield);
 	}
 }
@@ -323,9 +326,18 @@ void ABlasterCharacter::UpdateHUDAmmo()
 {
 	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
 	if (BlasterPlayerController && Combat && Combat->EquippedWeapon) {
+
 		BlasterPlayerController->SetHUDCarriedAmmo(Combat->CarriedAmmo);
 		BlasterPlayerController->SetHUDWeaponAmmo(Combat->EquippedWeapon->GetAmmo());
 
+	}
+}
+
+void ABlasterCharacter::UpdateHUDGrenade()
+{
+	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
+	if (BlasterPlayerController && Combat) {
+		BlasterPlayerController->SetHUDGrenades(Combat->GetGrenades());
 	}
 }
 
@@ -382,10 +394,7 @@ void ABlasterCharacter::Tick(float DeltaTime)
 
 	RotateInPlace(DeltaTime);
 	HideCameraIfCharacterClosed();
-	//if (OverlappingWeapon) {
-	//	OverlappingWeapon->ShowPickupWidget(true);
-	//}
-	//TODO: delete this...plz
+
 	PollInit();
 
 }

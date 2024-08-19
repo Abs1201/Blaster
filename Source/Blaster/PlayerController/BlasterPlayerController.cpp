@@ -318,14 +318,11 @@ void ABlasterPlayerController::BeginPlay()
 void ABlasterPlayerController::PollInit()
 {
 	if (CharacterOverlay == nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("PollInit 1"));
 
 		if (BlasterHUD && BlasterHUD->CharacterOverlay) {
-			UE_LOG(LogTemp, Warning, TEXT("PollInit 2"));
 
 			CharacterOverlay = BlasterHUD->CharacterOverlay;
 			if (CharacterOverlay) {
-				UE_LOG(LogTemp, Warning, TEXT("PollInit 3"));
 
 				if(bInitializeHealth) SetHUDHealth(HUDHealth, HUDMaxHealth);
 				if(bInitializeShield) SetHUDShield(HUDShield, HUDMaxShield);

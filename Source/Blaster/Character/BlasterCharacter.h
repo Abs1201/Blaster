@@ -47,6 +47,7 @@ public:
 	void UpdateHUDHealth();
 	void UpdateHUDShield();
 	void UpdateHUDAmmo();
+	void UpdateHUDGrenade();
 
 	void SpawnDefaultWeapon();
 
