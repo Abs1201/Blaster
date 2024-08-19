@@ -669,6 +669,11 @@ void ABlasterCharacter::GrenadeButtonPressed()
 	}
 }
 
+//void ABlasterCharacter::SwapButtonPressed()
+//{
+//
+//}
+
 void ABlasterCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
 {
 	if (bElimmed) return;

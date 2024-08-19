@@ -77,6 +77,8 @@ protected:
 	void RunButtonReleased();
 	void ReloadButtonPressed();
 	void GrenadeButtonPressed();
+	//void SwapButtonPressed();
+
 	void DropOrDestroyWeapon(AWeapon* Weapon);
 	void DropOrDestroyWeapons();
 

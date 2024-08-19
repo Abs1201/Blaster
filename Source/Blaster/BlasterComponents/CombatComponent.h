@@ -64,6 +64,7 @@ protected:
 	void OnRep_SecondaryWeapon();
 
 	void Fire();
+	void LocalFire(const FVector_NetQuantize& TraceHitTarget);
 
 
 
