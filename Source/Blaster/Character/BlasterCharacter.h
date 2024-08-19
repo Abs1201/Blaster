@@ -31,6 +31,7 @@ public:
 
 	void Elim();
 
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastElim();
 
@@ -76,6 +77,8 @@ protected:
 	void RunButtonReleased();
 	void ReloadButtonPressed();
 	void GrenadeButtonPressed();
+	void DropOrDestroyWeapon(AWeapon* Weapon);
+	void DropOrDestroyWeapons();
 
 
 	UFUNCTION()
