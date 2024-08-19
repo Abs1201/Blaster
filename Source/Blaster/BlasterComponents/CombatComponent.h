@@ -25,6 +25,7 @@ public:
 	void Run(bool bPressed);
 
 	void EquipWeapon(class AWeapon* WeaponToEquip);
+	void SwapWeapons();
 	void ReloadEmptyWeapon();
 	void Reload();
 
@@ -225,5 +226,5 @@ private:
 
 public:	
 	FORCEINLINE int32 GetGrenades() const { return Grenades; }
-		
+	bool ShouldSwapWeapon();
 };

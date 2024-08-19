@@ -464,6 +464,18 @@ void ABlasterCharacter::EquipButtonPressed()
 	}
 }
 
+void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
+{
+	if (Combat) {
+		if (OverlappingWeapon) {
+			Combat->EquipWeapon(OverlappingWeapon);
+		}
+		else if (Combat->ShouldSwapWeapon()) {
+			Combat->SwapWeapons();
+		}
+	}
+}
+
 void ABlasterCharacter::CrouchButtonPressed()
 {
 	if (bDisableGameplay) return;
@@ -672,12 +684,7 @@ void ABlasterCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const 
 
 }
 
-void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
-{ 
-	if (Combat) {
-		Combat->EquipWeapon(OverlappingWeapon);
-	}
-}
+
 
 void ABlasterCharacter::TurnInPlace(float DeltaTime)
 {
