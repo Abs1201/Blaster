@@ -154,7 +154,6 @@ void AWeapon::OnRep_WeaponState()
 
 void AWeapon::OnWeaponStateSet()
 {
-	UE_LOG(LogTemp, Warning, TEXT("EquipPrimaryWeapon -> SetWeaponState -> OnWeaponStateSet"));
 
 	switch (WeaponState) {
 	case EWeaponState::EWS_Equipped:

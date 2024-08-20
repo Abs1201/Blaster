@@ -365,7 +365,6 @@ void ABlasterCharacter::SpawnDefaultWeapon()
 		//StartingWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 		StartingWeapon->bDestroyWeapon = true;
 		if (Combat) {
-			UE_LOG(LogTemp, Warning, TEXT(" spawnDefaultWeapon -> Combat."));
 
 			Combat->EquipWeapon(StartingWeapon);
 		}
@@ -486,12 +485,10 @@ void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
 {
 	if (Combat) {
 		if (OverlappingWeapon) {
-			UE_LOG(LogTemp, Warning, TEXT("overlapping weapon"));
 
 			Combat->EquipWeapon(OverlappingWeapon);
 		}
 		else if (Combat->ShouldSwapWeapon()) {
-			UE_LOG(LogTemp, Warning, TEXT("can swap weapon"));
 			Combat->SwapWeapons();
 		}
 	}

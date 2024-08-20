@@ -382,7 +382,6 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 		EquipSecondaryWeapon(WeaponToEquip);
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT(" EquipPrimaryWeapon"));
 
 		EquipPrimaryWeapon(WeaponToEquip);
 	}
@@ -417,7 +416,6 @@ void UCombatComponent::EquipPrimaryWeapon(AWeapon* WeaponToEquip)
 	DropEquippedWeapon();
 
 	EquippedWeapon = WeaponToEquip;
-	UE_LOG(LogTemp, Warning, TEXT(" setWeaponstate in primaryWeapon"));
 
 	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 
