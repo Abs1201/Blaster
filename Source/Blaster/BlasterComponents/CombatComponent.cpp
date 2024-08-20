@@ -377,13 +377,14 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 {
 	if (Character == nullptr || WeaponToEquip == nullptr) return;
 	if (CombatState != ECombatState::ECS_Unoccupied) return;
-	if (EquippedWeapon != nullptr && SecondaryWeapon == nullptr) {
 
+	if (EquippedWeapon != nullptr && SecondaryWeapon == nullptr) {
 		EquipSecondaryWeapon(WeaponToEquip);
 	}
 	else {
-		EquipPrimaryWeapon(WeaponToEquip);
+		UE_LOG(LogTemp, Warning, TEXT(" EquipPrimaryWeapon"));
 
+		EquipPrimaryWeapon(WeaponToEquip);
 	}
 
 	Character->GetCharacterMovement()->bOrientRotationToMovement = false;
@@ -394,22 +395,20 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 void UCombatComponent::SwapWeapons()
 {
 	if (CombatState != ECombatState::ECS_Unoccupied) return;
-	if (EquippedWeapon && SecondaryWeapon) {
-		AWeapon* TempWeapon = EquippedWeapon;
-		EquippedWeapon = SecondaryWeapon;
-		SecondaryWeapon = TempWeapon;
+	//if (EquippedWeapon && SecondaryWeapon) {
+	//}
+	AWeapon* TempWeapon = EquippedWeapon;
+	EquippedWeapon = SecondaryWeapon;
+	SecondaryWeapon = TempWeapon;
 
-		EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
-		AttachActorToRightHand(EquippedWeapon);
-		EquippedWeapon->SetHUDAmmo();
-		UpdateCarriedAmmo();
-		PlayEquipWeaponSound(EquippedWeapon);
+	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+	AttachActorToRightHand(EquippedWeapon);
+	EquippedWeapon->SetHUDAmmo();
+	UpdateCarriedAmmo();
+	PlayEquipWeaponSound(EquippedWeapon);
 
-		SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
-		AttachActorToBackpack(SecondaryWeapon);
-
-	}
-
+	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
+	AttachActorToBackpack(SecondaryWeapon);
 }
 
 void UCombatComponent::EquipPrimaryWeapon(AWeapon* WeaponToEquip)
@@ -418,6 +417,8 @@ void UCombatComponent::EquipPrimaryWeapon(AWeapon* WeaponToEquip)
 	DropEquippedWeapon();
 
 	EquippedWeapon = WeaponToEquip;
+	UE_LOG(LogTemp, Warning, TEXT(" setWeaponstate in primaryWeapon"));
+
 	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 
 	AttachActorToRightHand(EquippedWeapon);

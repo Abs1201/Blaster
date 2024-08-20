@@ -28,8 +28,6 @@ void UBuffComponent::ReplenishShield(float ShieldAmount, float ReplenishTime)
 	bReplenishingShield = true;
 	ShieldReplenishRate = ShieldAmount / ReplenishTime;
 	ShieldReplenishAmount += ShieldAmount;
-	UE_LOG(LogTemp, Warning, TEXT("shieldRate: %f"), ShieldReplenishRate);
-	UE_LOG(LogTemp, Warning, TEXT("shieldAmount: %f"), ShieldReplenishAmount);
 
 }
 

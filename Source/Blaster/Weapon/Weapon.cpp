@@ -154,6 +154,8 @@ void AWeapon::OnRep_WeaponState()
 
 void AWeapon::OnWeaponStateSet()
 {
+	UE_LOG(LogTemp, Warning, TEXT("EquipPrimaryWeapon -> SetWeaponState -> OnWeaponStateSet"));
+
 	switch (WeaponState) {
 	case EWeaponState::EWS_Equipped:
 		OnEquipped();
@@ -170,6 +172,7 @@ void AWeapon::OnWeaponStateSet()
 void AWeapon::OnEquipped()
 {
 	ShowPickupWidget(false);
+	AreaSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	WeaponMesh->SetSimulatePhysics(false);
 	WeaponMesh->SetEnableGravity(false);
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);

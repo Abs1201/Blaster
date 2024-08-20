@@ -307,18 +307,17 @@ void ABlasterCharacter::BeginPlay()
 	Super::BeginPlay();
 	SpawnDefaultWeapon();
 
-
 	if (HasAuthority()) {
 		OnTakeAnyDamage.AddDynamic(this, &ABlasterCharacter::ReceiveDamage);
 	}
 	if (AttachedGrenade) {
 		AttachedGrenade->SetVisibility(false);
 	}
+
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDAmmo);
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDHealth);
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDShield);
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDGrenade);
-
 }
 
 void ABlasterCharacter::UpdateHUDHealth()
@@ -363,8 +362,11 @@ void ABlasterCharacter::SpawnDefaultWeapon()
 	UWorld* World = GetWorld();
 	if (BlasterGameMode && World && !bElimmed && DefaultWeaponClass) {
 		AWeapon* StartingWeapon = World->SpawnActor<AWeapon>(DefaultWeaponClass);
+		//StartingWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 		StartingWeapon->bDestroyWeapon = true;
 		if (Combat) {
+			UE_LOG(LogTemp, Warning, TEXT(" spawnDefaultWeapon -> Combat."));
+
 			Combat->EquipWeapon(StartingWeapon);
 		}
 	}
@@ -484,9 +486,12 @@ void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
 {
 	if (Combat) {
 		if (OverlappingWeapon) {
+			UE_LOG(LogTemp, Warning, TEXT("overlapping weapon"));
+
 			Combat->EquipWeapon(OverlappingWeapon);
 		}
 		else if (Combat->ShouldSwapWeapon()) {
+			UE_LOG(LogTemp, Warning, TEXT("can swap weapon"));
 			Combat->SwapWeapons();
 		}
 	}
