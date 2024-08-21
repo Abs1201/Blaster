@@ -146,12 +146,7 @@ void AWeapon::SetWeaponState(EWeaponState State)
 {
 	WeaponState = State;
 	OnWeaponStateSet();
-	
-}
 
-void AWeapon::OnRep_WeaponState()
-{
-	OnWeaponStateSet();
 }
 
 void AWeapon::OnWeaponStateSet()
@@ -167,6 +162,11 @@ void AWeapon::OnWeaponStateSet()
 		OnDropped();
 		break;
 	}
+}
+
+void AWeapon::OnRep_WeaponState()
+{
+	OnWeaponStateSet();
 }
 
 void AWeapon::OnEquipped()
@@ -188,6 +188,7 @@ void AWeapon::OnEquipped()
 void AWeapon::OnEquippedSecondary()
 {
 	ShowPickupWidget(false);
+	AreaSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	WeaponMesh->SetSimulatePhysics(false);
 	WeaponMesh->SetEnableGravity(false);
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
