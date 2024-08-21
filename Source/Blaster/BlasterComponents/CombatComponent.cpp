@@ -155,7 +155,7 @@ void UCombatComponent::FireProjectileWeapon()
 void UCombatComponent::FireHitScanWeapon()
 {
 	if (EquippedWeapon) {
-		HitTarget = EquippedWeapon->bUseScatter ? EquippedWeapon->TraceEndWithScatter(HitTarget) : HitTarget;	ServerFire(HitTarget);
+		HitTarget = EquippedWeapon->bUseScatter ? EquippedWeapon->TraceEndWithScatter(HitTarget) : HitTarget;
 		if (!Character->HasAuthority()) LocalFire(HitTarget);
 		ServerFire(HitTarget);
 
@@ -164,7 +164,6 @@ void UCombatComponent::FireHitScanWeapon()
 
 void UCombatComponent::FireShotgun()
 {
-
 	AShotgun* Shotgun = Cast<AShotgun>(EquippedWeapon);
 	if (Shotgun && Character) {
 		TArray<FVector_NetQuantize> HitTargets;
@@ -172,7 +171,6 @@ void UCombatComponent::FireShotgun()
 		if(!Character->HasAuthority()) ShotgunLocalFire(HitTargets);
 		ServerShotgunFire(HitTargets);
 	}
-
 }
 
 void UCombatComponent::ServerShotgunFire_Implementation(const TArray<FVector_NetQuantize>& TraceHitTargets)
@@ -182,7 +180,7 @@ void UCombatComponent::ServerShotgunFire_Implementation(const TArray<FVector_Net
 
 void UCombatComponent::MulticastShotgunFire_Implementation(const TArray<FVector_NetQuantize>& TraceHitTargets)
 {
-	if (Character && Character->IsLocallyControlled() && Character->HasAuthority()) return;
+	if (Character && Character->IsLocallyControlled() && !Character->HasAuthority()) return;
 	ShotgunLocalFire(TraceHitTargets);
 }
 
