@@ -365,7 +365,6 @@ void ABlasterCharacter::SpawnDefaultWeapon()
 		//StartingWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 		StartingWeapon->bDestroyWeapon = true;
 		if (Combat) {
-
 			Combat->EquipWeapon(StartingWeapon);
 		}
 	}
