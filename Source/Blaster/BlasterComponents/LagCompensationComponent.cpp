@@ -18,6 +18,10 @@ ULagCompensationComponent::ULagCompensationComponent()
 
 
 
+
+
+
+
 void ULagCompensationComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -376,7 +380,7 @@ FServerSideRewindResult ULagCompensationComponent::ServerSideRewind(ABlasterChar
 
 }
 
-FServerSideRewindResult ULagCompensationComponent::ProjectServerSideRewind(ABlasterCharacter* HitCharacter, const FVector_NetQuantize& TraceStart, const FVector_NetQuantize100& InitialVelocity, float HitTime)
+FServerSideRewindResult ULagCompensationComponent::ProjectileServerSideRewind(ABlasterCharacter* HitCharacter, const FVector_NetQuantize& TraceStart, const FVector_NetQuantize100& InitialVelocity, float HitTime)
 {
 	FFramePackage FrameToCheck = GetFrameToCheck(HitCharacter, HitTime);
 
@@ -458,12 +462,28 @@ void ULagCompensationComponent::ServerScoreRequest_Implementation(ABlasterCharac
 {
 	FServerSideRewindResult Confirm = ServerSideRewind(HitCharacter, TraceStart, HitLocation, HitTime);
 
-	if (Character && Character->Controller && HitCharacter && Confirm.bHitconfirmed && DamageCauser) {
+	if (Character && Character->Controller && HitCharacter && Confirm.bHitConfirmed && DamageCauser) {
 		UGameplayStatics::ApplyDamage(
 			HitCharacter,
 			DamageCauser->GetDamage(),
 			Character->Controller,
 			DamageCauser,
+			UDamageType::StaticClass()
+		);
+	}
+}
+
+void ULagCompensationComponent::ProjectileServerScoreRequest_Implementation(ABlasterCharacter* HitCharacter, const FVector_NetQuantize& TraceStart, const FVector_NetQuantize100& InitialVelocity, float HitTime)
+{
+	FServerSideRewindResult Confirm = ProjectileServerSideRewind(HitCharacter, TraceStart, InitialVelocity, HitTime);
+
+	if (Character && HitCharacter && Confirm.bHitConfirmed)
+	{
+		UGameplayStatics::ApplyDamage(
+			HitCharacter,
+			Character->GetEquippedWeapon()->GetDamage(),
+			Character->Controller,
+			Character->GetEquippedWeapon(),
 			UDamageType::StaticClass()
 		);
 	}

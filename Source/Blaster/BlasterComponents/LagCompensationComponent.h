@@ -39,7 +39,7 @@ struct FServerSideRewindResult {
 	GENERATED_BODY()
 
 	UPROPERTY()
-	bool bHitconfirmed=false;
+	bool bHitConfirmed=false;
 
 	UPROPERTY()
 	bool bHeadShot=false;
@@ -81,7 +81,7 @@ public:
 	/*
 	* Projectile
 	*/
-	FServerSideRewindResult ProjectServerSideRewind(
+	FServerSideRewindResult ProjectileServerSideRewind(
 		ABlasterCharacter* HitCharacter,
 		const FVector_NetQuantize& TraceStart,
 		const FVector_NetQuantize100& InitialVelocity,
@@ -106,6 +106,14 @@ public:
 		const FVector_NetQuantize& HitLocation,
 		float HitTime,
 		class AWeapon* DamageCauser
+	);
+
+	UFUNCTION(Server, Reliable)
+	void ProjectileServerScoreRequest(
+		ABlasterCharacter* HitCharacter,
+		const FVector_NetQuantize& TraceStart,
+		const FVector_NetQuantize100& InitialVelocity,
+		float HitTime
 	);
 
 
