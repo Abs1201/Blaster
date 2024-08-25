@@ -150,10 +150,9 @@ ABlasterCharacter::ABlasterCharacter()
 	foot_r = CreateDefaultSubobject<UBoxComponent>(TEXT("foot_r"));
 	foot_r->SetupAttachment(GetMesh(), FName("foot_r"));
 	HitCollisionBoxes.Add(FName("foot_r"), foot_r);
-	uint32 i = 0;
+
 	for (auto& Box : HitCollisionBoxes) {
 		if (Box.Value) {
-			UE_LOG(LogTemp, Warning, TEXT("box %d"), i); i++;
 			Box.Value->SetCollisionObjectType(ECC_HitBox);
 			Box.Value->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 			Box.Value->SetCollisionResponseToChannel(ECC_HitBox, ECollisionResponse::ECR_Block);
