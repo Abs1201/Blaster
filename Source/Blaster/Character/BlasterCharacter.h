@@ -22,6 +22,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostInitializeComponents() override;
+
+	/*
+	* Play montages
+	*/
+	void PlaySwapMontage();
 	void PlayFireMontage(bool bAiming);
 	void PlayReloadMontage();
 	void PlayElimMontage();
@@ -54,6 +59,8 @@ public:
 
 	UPROPERTY()
 	TMap<FName, class UBoxComponent*> HitCollisionBoxes;
+
+	bool bFinishedSwapping = false;
 
 protected:
 	// Called when the game starts or when spawned
@@ -212,6 +219,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = Combat)
 	UAnimMontage* ThrowGrenadeMontage;
 
+	UPROPERTY(EditAnywhere, Category = Combat)
+	UAnimMontage* SwapMontage;
 
 	//UPROPERTY(EditAnywhere, Category = Combat)
 	//UAnimMontage* RunMontage;
