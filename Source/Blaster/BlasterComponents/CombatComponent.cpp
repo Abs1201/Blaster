@@ -389,9 +389,10 @@ void UCombatComponent::ServerShotgunFire_Implementation(const TArray<FVector_Net
 {
 	MulticastShotgunFire(TraceHitTargets);
 }
-bool UCombatComponent::ServerShotgunFire_Validate(const FVector_NetQuantize& TraceHitTarget, float FireDelay)
+bool UCombatComponent::ServerShotgunFire_Validate(const TArray<FVector_NetQuantize>& TraceHitTargets, float FireDelay)
 {
-	if (EquippedWeapon) {
+	if (EquippedWeapon)
+	{
 		bool bNearlyEqual = FMath::IsNearlyEqual(EquippedWeapon->FireDelay, FireDelay, 0.001f);
 		return bNearlyEqual;
 	}

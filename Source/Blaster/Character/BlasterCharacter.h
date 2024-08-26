@@ -287,6 +287,8 @@ private:
 
 	void ElimTimerFinished();
 
+	
+
 	/*
 	* Dissolve effect
 	*/
