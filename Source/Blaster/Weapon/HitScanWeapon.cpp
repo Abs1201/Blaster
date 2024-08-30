@@ -11,7 +11,7 @@
 #include "Blaster/BlasterComponents/LagCompensationComponent.h"
 #include "Blaster/PlayerController/BlasterPlayerController.h"
 
-#include "DrawDebugHelpers.h"
+//#include "DrawDebugHelpers.h"
 
 void AHitScanWeapon::Fire(const FVector& HitTarget)
 {
@@ -105,7 +105,7 @@ void AHitScanWeapon::WeaponTraceHit(const FVector& TraceStart, const FVector& Hi
 		if (OutHit.bBlockingHit) {
 			BeamEnd = OutHit.ImpactPoint;
 		}
-		DrawDebugSphere(GetWorld(), BeamEnd, 5.f, 12, FColor::Blue, true);
+		//DrawDebugSphere(GetWorld(), BeamEnd, 5.f, 12, FColor::Blue, true);
 		if (BeamParticles) {
 			UParticleSystemComponent* Beam = UGameplayStatics::SpawnEmitterAtLocation(
 				World,

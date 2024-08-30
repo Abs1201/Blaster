@@ -56,7 +56,8 @@ void ABlasterGameMode::OnMatchStateSet()
 	Super::OnMatchStateSet();
 
 	//loop all controllers in game
-	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It) {
+	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It) 
+	{
 		ABlasterPlayerController* BlasterPlayer = Cast<ABlasterPlayerController>(*It);
 		if (BlasterPlayer) {
 			BlasterPlayer->OnMatchStateSet(MatchState);
@@ -74,18 +75,51 @@ void ABlasterGameMode::PlayerEliminated(ABlasterCharacter* ElimmedCharacter, ABl
 {
 	ABlasterPlayerState* AttackerPlayerState = AttackerController ? Cast<ABlasterPlayerState>(AttackerController->PlayerState) : nullptr;
 	ABlasterPlayerState* VictimPlayerState = VictimController ? Cast<ABlasterPlayerState>(VictimController->PlayerState) : nullptr;
+
 	ABlasterGameState* BlasterGameState = GetGameState<ABlasterGameState>();
-	if (AttackerPlayerState && AttackerPlayerState != VictimPlayerState && BlasterGameState) {
+
+	if (AttackerPlayerState && AttackerPlayerState != VictimPlayerState && BlasterGameState) 
+	{
+		TArray<ABlasterPlayerState*> PlayersCurrentlyInTheLead;
+		for (auto LeadPlayer : BlasterGameState->TopScoringPlayers)
+		{
+			PlayersCurrentlyInTheLead.Add(LeadPlayer);
+		}
+
 		AttackerPlayerState->AddToScore(1.f);
 		BlasterGameState->UpdateTopScore(AttackerPlayerState);
+		if (BlasterGameState->TopScoringPlayers.Contains(AttackerPlayerState))
+		{
+			ABlasterCharacter* Leader = Cast<ABlasterCharacter>(AttackerPlayerState->GetPawn());
+			if (Leader)
+			{
+				Leader->MulticastGainedTheLead();
+			}
+
+		}
+
+		for (int32 i = 0; i < PlayersCurrentlyInTheLead.Num(); i++)
+		{
+			if (!BlasterGameState->TopScoringPlayers.Contains(PlayersCurrentlyInTheLead[i]))
+			{
+				ABlasterCharacter* Loser = Cast<ABlasterCharacter>(PlayersCurrentlyInTheLead[i]->GetPawn());
+				if (Loser)
+				{
+					Loser->MulticastLostTheLead();
+				}
+			}
+		}
 	}
-	if (VictimPlayerState) {
+	if (VictimPlayerState) 
+	{
 		VictimPlayerState->AddToDefeats(1);
 	}
-	if (AttackerPlayerState && AttackerPlayerState != VictimPlayerState && VictimPlayerState) {
+	if (AttackerPlayerState && AttackerPlayerState != VictimPlayerState && VictimPlayerState) 
+	{
 		VictimPlayerState->UpdateDefeatMsg(AttackerPlayerState->GetPlayerName());
 	}
-	if (ElimmedCharacter) {
+	if (ElimmedCharacter) 
+	{
 		ElimmedCharacter->Elim(false);
 	}
 }
