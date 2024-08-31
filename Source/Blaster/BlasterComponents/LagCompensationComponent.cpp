@@ -453,16 +453,19 @@ FFramePackage ULagCompensationComponent::GetFrameToCheck(ABlasterCharacter* HitC
 
 
 
-void ULagCompensationComponent::ServerScoreRequest_Implementation(ABlasterCharacter* HitCharacter, const FVector_NetQuantize& TraceStart, const FVector_NetQuantize& HitLocation, float HitTime, AWeapon* DamageCauser)
+void ULagCompensationComponent::ServerScoreRequest_Implementation(ABlasterCharacter* HitCharacter, const FVector_NetQuantize& TraceStart, const FVector_NetQuantize& HitLocation, float HitTime)
 {
 	FServerSideRewindResult Confirm = ServerSideRewind(HitCharacter, TraceStart, HitLocation, HitTime);
 
-	if (Character && Character->Controller && HitCharacter && Confirm.bHitConfirmed && DamageCauser) {
+	if (Character && Character->Controller && HitCharacter && Confirm.bHitConfirmed && Character->GetEquippedWeapon())
+	{
+		const float Damage = Confirm.bHeadShot ? Character->GetEquippedWeapon()->GetHeadShotDamage() : Character->GetEquippedWeapon()->GetDamage();
+
 		UGameplayStatics::ApplyDamage(
 			HitCharacter,
-			DamageCauser->GetDamage(),
+			Damage,
 			Character->Controller,
-			DamageCauser,
+			Character->GetEquippedWeapon(),
 			UDamageType::StaticClass()
 		);
 	}
@@ -472,11 +475,14 @@ void ULagCompensationComponent::ProjectileServerScoreRequest_Implementation(ABla
 {
 	FServerSideRewindResult Confirm = ProjectileServerSideRewind(HitCharacter, TraceStart, InitialVelocity, HitTime);
 
-	if (Character && HitCharacter && Confirm.bHitConfirmed)
+	if (Character && HitCharacter && Confirm.bHitConfirmed && Character->GetEquippedWeapon())
 	{
+		const float Damage = Confirm.bHeadShot ? Character->GetEquippedWeapon()->GetHeadShotDamage() : Character->GetEquippedWeapon()->GetDamage();
+
+
 		UGameplayStatics::ApplyDamage(
 			HitCharacter,
-			Character->GetEquippedWeapon()->GetDamage(),
+			Damage,
 			Character->Controller,
 			Character->GetEquippedWeapon(),
 			UDamageType::StaticClass()
@@ -489,14 +495,17 @@ void ULagCompensationComponent::ShotgunServerScoreRequest_Implementation(const T
 {
 	FShotgunServerSideRewindResult Confirm = ShotgunServerSideRewind(HitCharacters, TraceStart, HitLocations, HitTime);
 
-	for (auto& HitCharacter : HitCharacters) {
+	for (auto& HitCharacter : HitCharacters) 
+	{
 		if (HitCharacter == nullptr || HitCharacter->GetEquippedWeapon() == nullptr || Character == nullptr) continue;
 		float TotalDamage=0.f;
-		if (Confirm.HeadShots.Contains(HitCharacter)) {
-			float HeadShotDamage = Confirm.HeadShots[HitCharacter] * HitCharacter->GetEquippedWeapon()->GetDamage();
+		if (Confirm.HeadShots.Contains(HitCharacter)) 
+		{
+			float HeadShotDamage = Confirm.HeadShots[HitCharacter] * HitCharacter->GetEquippedWeapon()->GetHeadShotDamage();
 			TotalDamage += HeadShotDamage;
 		}
-		if (Confirm.BodyShots.Contains(HitCharacter)) {
+		if (Confirm.BodyShots.Contains(HitCharacter)) 
+		{
 			float BodyShotDamage = Confirm.BodyShots[HitCharacter] * HitCharacter->GetEquippedWeapon()->GetDamage();
 			TotalDamage += BodyShotDamage;
 		}
@@ -512,7 +521,8 @@ void ULagCompensationComponent::ShotgunServerScoreRequest_Implementation(const T
 
 void ULagCompensationComponent::ShowFramePackage(const FFramePackage& Package, const FColor Color)
 {
-	for (auto& BoxInfo : Package.HitBoxInfo) {
+	for (auto& BoxInfo : Package.HitBoxInfo) 
+	{
 		DrawDebugBox(
 			GetWorld(),
 			BoxInfo.Value.Location,
