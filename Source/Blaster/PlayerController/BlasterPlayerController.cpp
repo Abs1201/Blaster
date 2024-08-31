@@ -315,6 +315,8 @@ void ABlasterPlayerController::ShowReturnToMainMenu()
 
 }
 
+
+
 // Is the ping too high?
 void ABlasterPlayerController::ServerReportPingStatus_Implementation(bool bHighPing)
 {
@@ -398,6 +400,44 @@ void ABlasterPlayerController::ClientJoinMidGame_Implementation(FName StateOfMat
 
 	if (BlasterHUD && MatchState == MatchState::WaitingToStart) {
 		BlasterHUD->AddAnouncement();
+	}
+}
+
+void ABlasterPlayerController::BroadcastElim(APlayerState* Attacker, APlayerState* Victim)
+{
+	ClientElimAnnouncement(Attacker, Victim);
+}
+//when gamemode call boradcastElim it calls clientelimannouncement
+void ABlasterPlayerController::ClientElimAnnouncement_Implementation(APlayerState* Attacker, APlayerState* Victim)
+{
+	APlayerState* Self = GetPlayerState<APlayerState>();
+	if (Attacker && Victim && Self)
+	{
+		BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+		if (BlasterHUD)
+		{
+			if (Attacker == Self && Victim != Self)
+			{
+				BlasterHUD->AddElimAnnouncement("You", Victim->GetPlayerName());
+				return;
+			}
+			else if (Victim == Self && Attacker != Self)
+			{
+				BlasterHUD->AddElimAnnouncement(Attacker->GetPlayerName(), "you");
+				return;
+			}
+			else if (Attacker == Victim && Attacker == Self)
+			{
+				BlasterHUD->AddElimAnnouncement("You", "yourself");
+				return;
+			}
+			else if (Attacker == Victim && Attacker != Self)
+			{
+				BlasterHUD->AddElimAnnouncement(Attacker->GetPlayerName(), "themseleves");
+				return;
+			}
+			BlasterHUD->AddElimAnnouncement(Attacker->GetPlayerName(), Victim->GetPlayerName());
+		}
 	}
 }
 
