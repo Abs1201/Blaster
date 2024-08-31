@@ -89,33 +89,33 @@ void ABlasterPlayerController::SetHUDDefeats(int32 Defeats)
 	}
 }
 
-void ABlasterPlayerController::SetHUDDefeatMsg(FString AttackerName)
-{
-	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
-	bool bHUDValid = BlasterHUD &&
-		BlasterHUD->CharacterOverlay &&
-		BlasterHUD->CharacterOverlay->AttackerText &&
-		BlasterHUD->CharacterOverlay->DefeatedBy;
-	if (bHUDValid) {
-		FString Attacker = FString::Printf(TEXT("%s"), *AttackerName);
-		BlasterHUD->CharacterOverlay->AttackerText->SetText(FText::FromString(Attacker));
-		BlasterHUD->CharacterOverlay->DefeatedBy->SetVisibility(ESlateVisibility::Visible);
-		BlasterHUD->CharacterOverlay->AttackerText->SetVisibility(ESlateVisibility::Visible);
-	}
-}
+//void ABlasterPlayerController::SetHUDDefeatMsg(FString AttackerName)
+//{
+//	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+//	bool bHUDValid = BlasterHUD &&
+//		BlasterHUD->CharacterOverlay &&
+//		BlasterHUD->CharacterOverlay->AttackerText &&
+//		BlasterHUD->CharacterOverlay->DefeatedBy;
+//	if (bHUDValid) {
+//		FString Attacker = FString::Printf(TEXT("%s"), *AttackerName);
+//		BlasterHUD->CharacterOverlay->AttackerText->SetText(FText::FromString(Attacker));
+//		BlasterHUD->CharacterOverlay->DefeatedBy->SetVisibility(ESlateVisibility::Visible);
+//		BlasterHUD->CharacterOverlay->AttackerText->SetVisibility(ESlateVisibility::Visible);
+//	}
+//}
 
-void ABlasterPlayerController::HideHUDDefeatMsg()
-{
-	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
-	bool bHUDValid = BlasterHUD &&
-		BlasterHUD->CharacterOverlay &&
-		BlasterHUD->CharacterOverlay->AttackerText &&
-		BlasterHUD->CharacterOverlay->DefeatedBy;
-	if (bHUDValid) {
-		BlasterHUD->CharacterOverlay->DefeatedBy->SetVisibility(ESlateVisibility::Collapsed);
-		BlasterHUD->CharacterOverlay->AttackerText->SetVisibility(ESlateVisibility::Collapsed);
-	}
-}
+//void ABlasterPlayerController::HideHUDDefeatMsg()
+//{
+//	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+//	bool bHUDValid = BlasterHUD &&
+//		BlasterHUD->CharacterOverlay &&
+//		BlasterHUD->CharacterOverlay->AttackerText &&
+//		BlasterHUD->CharacterOverlay->DefeatedBy;
+//	if (bHUDValid) {
+//		BlasterHUD->CharacterOverlay->DefeatedBy->SetVisibility(ESlateVisibility::Collapsed);
+//		BlasterHUD->CharacterOverlay->AttackerText->SetVisibility(ESlateVisibility::Collapsed);
+//	}
+//}
 
 void ABlasterPlayerController::SetHUDWeaponAmmo(int32 Ammo)
 {

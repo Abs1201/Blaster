@@ -23,8 +23,8 @@ public:
 
 	void SetHUDScore(float Score);
 	void SetHUDDefeats(int32 Defeats);
-	void SetHUDDefeatMsg(FString AttackerName);
-	void HideHUDDefeatMsg();
+	//void SetHUDDefeatMsg(FString AttackerName);
+	//void HideHUDDefeatMsg();
 	void SetHUDWeaponAmmo(int32 Ammo);
 	void SetHUDCarriedAmmo(int32 Ammo);
 	void SetHUDMatchCountdown(float CountdownTime);

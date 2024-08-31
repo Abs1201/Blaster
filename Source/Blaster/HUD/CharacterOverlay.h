@@ -33,11 +33,11 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* DefeatsAmount;
 
-	UPROPERTY(meta = (BindWidget))
-	UTextBlock* DefeatedBy;
+	//UPROPERTY(meta = (BindWidget))
+	//UTextBlock* DefeatedBy;
 
-	UPROPERTY(meta = (BindWidget))
-	UTextBlock* AttackerText;
+	//UPROPERTY(meta = (BindWidget))
+	//UTextBlock* AttackerText;
 
 
 	UPROPERTY(meta = (BindWidget))

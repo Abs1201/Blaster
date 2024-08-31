@@ -314,17 +314,15 @@ void ABlasterCharacter::Restart()
 {
 	Super::Restart();
 
-	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
-	if (BlasterPlayerController) {
-		BlasterPlayerController->HideHUDDefeatMsg();
-	}
+	//BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
+	//if (BlasterPlayerController) {
+	//	BlasterPlayerController->HideHUDDefeatMsg();
+	//}
 }
 
 void ABlasterCharacter::Elim(bool bPlayerLeftGame)
 {
 	DropOrDestroyWeapons();
-
-	//todo
 
 	MulticastElim(bPlayerLeftGame);
 	

@@ -23,14 +23,14 @@ public:
 	virtual void OnRep_Score() override;
 	UFUNCTION()
 	virtual void OnRep_Defeats();
-	UFUNCTION()
-	virtual void OnRep_DefeatedBy();
+	//UFUNCTION()
+	//virtual void OnRep_DefeatedBy();
 
 	void AddToScore(float ScoreAmount);
 	void AddToDefeats(int32 DefeatsAmount);
-	void UpdateDefeatMsg(FString Attacker);
+	//void UpdateDefeatMsg(FString Attacker);
 	
-	void ResetDefeatedBy();
+	//void ResetDefeatedBy();
 private:
 	UPROPERTY()
 	class ABlasterCharacter* Character;
@@ -41,8 +41,8 @@ private:
 	UPROPERTY(ReplicatedUsing = OnRep_Defeats)
 	int32 Defeats;
 
-	UPROPERTY(ReplicatedUsing = OnRep_DefeatedBy)
-	FString DefeatedBy;
+	//UPROPERTY(ReplicatedUsing = OnRep_DefeatedBy)
+	//FString DefeatedBy;
 
 	FTimerHandle ResetDefeatedByTimerHandle;
 };
