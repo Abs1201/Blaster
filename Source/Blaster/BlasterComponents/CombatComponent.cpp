@@ -183,11 +183,7 @@ void UCombatComponent::FireShotgun()
 
 
 
-void UCombatComponent::MulticastShotgunFire_Implementation(const TArray<FVector_NetQuantize>& TraceHitTargets)
-{
-	if (Character && Character->IsLocallyControlled() && !Character->HasAuthority()) return;
-	ShotgunLocalFire(TraceHitTargets);
-}
+
 
 void UCombatComponent::TraceUnderCrosshairs(FHitResult& TraceHitResult)
 {
@@ -398,6 +394,11 @@ bool UCombatComponent::ServerShotgunFire_Validate(const TArray<FVector_NetQuanti
 	}
 	return true;
 }
+void UCombatComponent::MulticastShotgunFire_Implementation(const TArray<FVector_NetQuantize>& TraceHitTargets)
+{
+	if (Character && Character->IsLocallyControlled() && !Character->HasAuthority()) return;
+	ShotgunLocalFire(TraceHitTargets);
+}
 
 
 void UCombatComponent::MulticastFire_Implementation(const FVector_NetQuantize& TraceHitTarget)
@@ -416,8 +417,12 @@ void UCombatComponent::LocalFire(const FVector_NetQuantize& TraceHitTarget)
 	}
 }
 
+
+
+
 void UCombatComponent::ShotgunLocalFire(const TArray<FVector_NetQuantize>& TraceHitTargets)
 {
+
 	AShotgun* Shotgun = Cast<AShotgun>(EquippedWeapon);
 	if (Shotgun == nullptr || Character == nullptr) return;
 	if (CombatState == ECombatState::ECS_Reloading || CombatState == ECombatState::ECS_Unoccupied) {
