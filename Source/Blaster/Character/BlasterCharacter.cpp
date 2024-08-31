@@ -324,6 +324,8 @@ void ABlasterCharacter::Elim(bool bPlayerLeftGame)
 {
 	DropOrDestroyWeapons();
 
+	//todo
+
 	MulticastElim(bPlayerLeftGame);
 	
 
