@@ -315,17 +315,7 @@ void ABlasterPlayerController::ShowReturnToMainMenu()
 
 }
 
-void ABlasterPlayerController::OnRep_ShowTeamScores()
-{
-	if (bShowTeamScores)
-	{
-		InitTeamScores();
-	}
-	else
-	{
-		HideTeamScores();
-	}
-}
+
 
 
 
@@ -367,6 +357,7 @@ void ABlasterPlayerController::InitTeamScores()
 		BlasterHUD->CharacterOverlay->BlueTeamScore &&
 		BlasterHUD->CharacterOverlay->ScoreSpacerText;
 	if (bHUDValid) {
+
 		FString Zero("0");
 		FString Spacer("|");
 		BlasterHUD->CharacterOverlay->RedTeamScore->SetText(FText::FromString(Zero));
@@ -536,6 +527,7 @@ void ABlasterPlayerController::PollInit()
 
 				if (bInitializeCarriedAmmo) SetHUDCarriedAmmo(HUDCarriedAmmo);
 				if (bInitializeWeaponAmmo) SetHUDWeaponAmmo(HUDWeaponAmmo);
+				//if (bInitializeTeamScore) InitTeamScores();
 
 				ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(GetPawn());
 				if (BlasterCharacter && BlasterCharacter->GetCombat()) {
@@ -615,6 +607,18 @@ void ABlasterPlayerController::OnRep_MatchState()
 	}
 	else if (MatchState == MatchState::Cooldown) {
 		HandleCooldown();
+	}
+}
+
+void ABlasterPlayerController::OnRep_ShowTeamScores()
+{
+	if (bShowTeamScores)
+	{
+		InitTeamScores();
+	}
+	else
+	{
+		HideTeamScores();
 	}
 }
 
