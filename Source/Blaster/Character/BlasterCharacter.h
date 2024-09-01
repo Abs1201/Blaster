@@ -386,6 +386,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AWeapon> DefaultWeaponClass;
 
+	UPROPERTY()
+	class ABlasterGameMode* BlasterGameMode;
 
 public:	
 	//getter, setter
