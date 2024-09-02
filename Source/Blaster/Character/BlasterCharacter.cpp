@@ -670,7 +670,8 @@ void ABlasterCharacter::EquipButtonPressed()
 
 	if (Combat) {
 		if(Combat->CombatState == ECombatState::ECS_Unoccupied) ServerEquipButtonPressed();
-		bool bSwap = Combat->ShouldSwapWeapon() &&
+		bool bSwap = 
+			Combat->ShouldSwapWeapon() &&
 			!HasAuthority() &&
 			Combat->CombatState == ECombatState::ECS_Unoccupied &&
 			OverlappingWeapon == nullptr;
@@ -680,6 +681,58 @@ void ABlasterCharacter::EquipButtonPressed()
 			bFinishedSwapping = false;
 		}
 	}
+}
+
+void ABlasterCharacter::RunButtonPressed()
+{
+	if (bDisableGameplay) return;
+
+	bRunButtonPressed = true;
+
+	if (HasAuthority()) 
+	{
+		Run(true);
+	}
+	else 
+	{
+		ServerRun(true);
+	}
+}
+
+void ABlasterCharacter::RunButtonReleased()
+{
+	if (bDisableGameplay) return;
+
+	bRunButtonPressed = false;
+
+	if (HasAuthority())
+	{
+		Run(false);
+	}
+	else 
+	{
+		ServerRun(false);
+	}
+}
+
+void ABlasterCharacter::Run(bool bPressed)
+{
+	if (HasAuthority())
+	{
+		if(Combat)
+		{
+			Combat->Run(bPressed);
+		}
+	}
+
+	GetCharacterMovement()->MaxWalkSpeed = bPressed ? RunSpeed : WalkSpeed;
+}
+
+
+
+void ABlasterCharacter::ServerRun_Implementation(bool bPressed)
+{
+	Run(bPressed);
 }
 
 void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
@@ -825,36 +878,9 @@ void ABlasterCharacter::FireButtonReleased()
 	}
 }
 
-void ABlasterCharacter::RunButtonPressed()
-{
-	if (bDisableGameplay) return;
 
-	bRunButtonPressed = true;
 
-	if (Combat) {
-		Combat->Run(true);
-	}
-	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
 
-}
-
-void ABlasterCharacter::RunButtonReleased()
-{
-	if (bDisableGameplay) return;
-
-	bRunButtonPressed = false;
-
-	if (Combat) {
-		Combat->Run(false);
-	}
-	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
-
-	if (Combat) {
-		Combat->Run(false);
-	}
-	bRunButtonPressed = false;
-
-}
 
 void ABlasterCharacter::ReloadButtonPressed()
 {
@@ -1004,6 +1030,7 @@ void ABlasterCharacter::StartDissolve()
 	}
 }
 
+
 void ABlasterCharacter::SetOverlappingWeapon(AWeapon* Weapon)
 {
 	if (OverlappingWeapon) {
@@ -1049,6 +1076,12 @@ bool ABlasterCharacter::IsLocallyReloading()
 {
 	if (Combat == nullptr) return false;
 	return Combat->bLocallyReloading;
+}
+
+bool ABlasterCharacter::IsHoldingTheFlag() const
+{
+	if (Combat == nullptr) return false;
+	return Combat->bHoldingTheFlag;
 }
 
 void ABlasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)

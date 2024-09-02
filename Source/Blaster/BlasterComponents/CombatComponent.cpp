@@ -457,9 +457,9 @@ void UCombatComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 
 void UCombatComponent::Run(bool bPressed)
 {
-	bRunButtonPressed = bPressed;
 	if (bPressed && CombatState != ECombatState::ECS_Running) {
 		CombatState = ECombatState::ECS_Running;
+
 	}
 	else {
 		CombatState = ECombatState::ECS_Unoccupied;
@@ -688,7 +688,6 @@ void UCombatComponent::HandleReload()
 {
 	if (Character) {
 		Character->PlayReloadMontage();
-
 	}
 
 }
@@ -766,6 +765,7 @@ void UCombatComponent::OnRep_CombatState()
 			Character->PlaySwapMontage();
 		}
 	}
+
 }
 
 void UCombatComponent::UpdateAmmoValues()

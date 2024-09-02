@@ -102,6 +102,9 @@ protected:
 	void FireButtonReleased();
 	void RunButtonPressed();
 	void RunButtonReleased();
+	void Run(bool bPressed);
+	UFUNCTION(Server, Reliable)
+	void ServerRun(bool bPressed);
 	void ReloadButtonPressed();
 	void GrenadeButtonPressed();
 	//void SwapButtonPressed();
@@ -389,6 +392,8 @@ private:
 	UPROPERTY()
 	class ABlasterGameMode* BlasterGameMode;
 
+
+
 public:	
 	//getter, setter
 	void SetOverlappingWeapon(AWeapon* Weapon);
@@ -419,4 +424,6 @@ public:
 	FORCEINLINE UBuffComponent* GetBuff() const { return Buff; }
 	bool IsLocallyReloading();
 	FORCEINLINE ULagCompensationComponent* GetLagCompensation() const { return LagCompensation; }
+	FORCEINLINE bool IsHoldingTheFlag() const;
+
 };
