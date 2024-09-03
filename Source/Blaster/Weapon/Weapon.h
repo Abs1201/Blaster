@@ -193,6 +193,8 @@ private:
 public:	
 	void  SetWeaponState(EWeaponState State);
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }
+	FORCEINLINE UWidgetComponent* GetPickupWidget() const { return PickupWidget; }
+
 	FORCEINLINE USkeletalMeshComponent* GetWeaponMesh() const { return WeaponMesh; }
 	virtual float GetZoomedFOV() const;
 	FORCEINLINE float GetZoomInterpSpeed() const { return ZoomInterpSpeed; }
