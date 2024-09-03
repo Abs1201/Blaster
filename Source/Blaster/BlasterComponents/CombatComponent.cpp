@@ -450,6 +450,8 @@ void UCombatComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME_CONDITION(UCombatComponent, CarriedAmmo, COND_OwnerOnly);
 	DOREPLIFETIME(UCombatComponent, CombatState);
 	DOREPLIFETIME(UCombatComponent, Grenades);
+	DOREPLIFETIME(UCombatComponent, bHoldingTheFlag);
+
 
 
 
@@ -471,16 +473,29 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 	if (Character == nullptr || WeaponToEquip == nullptr) return;
 	if (CombatState != ECombatState::ECS_Unoccupied) return;
 
-	if (EquippedWeapon != nullptr && SecondaryWeapon == nullptr) {
-		EquipSecondaryWeapon(WeaponToEquip);
+	if (WeaponToEquip->GetWeaponType() == EWeaponType::EWT_Flag)
+	{
+		Character->Crouch();
+		bHoldingTheFlag = true;
+		AttachFlagToLeftHand(WeaponToEquip);
+		WeaponToEquip->SetWeaponState(EWeaponState::EWS_Equipped);
+		WeaponToEquip->SetOwner(Character);
 	}
-	else {
+	else
+	{
+		if (EquippedWeapon != nullptr && SecondaryWeapon == nullptr) {
+			EquipSecondaryWeapon(WeaponToEquip);
+		}
+		else {
 
-		EquipPrimaryWeapon(WeaponToEquip);
+			EquipPrimaryWeapon(WeaponToEquip);
+		}
+
+		Character->GetCharacterMovement()->bOrientRotationToMovement = false;
+		Character->bUseControllerRotationYaw = true;
 	}
 
-	Character->GetCharacterMovement()->bOrientRotationToMovement = false;
-	Character->bUseControllerRotationYaw = true;
+	
 
 }
 
@@ -552,6 +567,15 @@ void UCombatComponent::AttachActorToLeftHand(AActor* ActorToAttach) {
 	const USkeletalMeshSocket* HandSocket = Character->GetMesh()->GetSocketByName(SocketName);
 	if (HandSocket) {
 		HandSocket->AttachActor(ActorToAttach, Character->GetMesh());
+	}
+}
+
+void UCombatComponent::AttachFlagToLeftHand(AWeapon* Flag)
+{
+	if (Character == nullptr || Character->GetMesh() == nullptr || Flag == nullptr) return;
+	const USkeletalMeshSocket* HandSocket = Character->GetMesh()->GetSocketByName(FName("FlagSocket"));
+	if (HandSocket) {
+		HandSocket->AttachActor(Flag, Character->GetMesh());
 	}
 }
 
@@ -819,6 +843,8 @@ void UCombatComponent::UpdateHUDGrenades()
 	}
 }
 
+
+
 bool UCombatComponent::ShouldSwapWeapon()
 {
 	return (EquippedWeapon != nullptr && SecondaryWeapon != nullptr);
@@ -867,3 +893,11 @@ void UCombatComponent::ServerLaunchGrenade_Implementation(const FVector_NetQuant
 	}
 }
 
+
+void UCombatComponent::OnRep_HoldingTheFlag()
+{
+	if (bHoldingTheFlag && Character && Character->IsLocallyControlled())
+	{
+		Character->Crouch();
+	}
+}
