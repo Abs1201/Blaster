@@ -27,5 +27,4 @@ void AFlag::OnDropped()
 {
 	Super::OnDropped();
 
-	UE_LOG(LogTemp, Warning, TEXT("ondropped in Flag"));
 }

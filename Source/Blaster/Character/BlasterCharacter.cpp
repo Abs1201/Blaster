@@ -1117,6 +1117,8 @@ bool ABlasterCharacter::IsHoldingTheFlag() const
 	return Combat->bHoldingTheFlag;
 }
 
+
+
 void ABlasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
 {
 	if (OverlappingWeapon) {
@@ -1125,4 +1127,11 @@ void ABlasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
 	if (LastWeapon) {
 		LastWeapon->ShowPickupWidget(false); 
 	}
+}
+
+ETeam ABlasterCharacter::GetTeam()
+{
+	BlasterPlayerState = BlasterPlayerState == nullptr ? GetPlayerState<ABlasterPlayerState>() : BlasterPlayerState;
+	if (BlasterPlayerState == nullptr) return ETeam::ET_NoTeam;
+	return BlasterPlayerState->GetTeam();
 }
