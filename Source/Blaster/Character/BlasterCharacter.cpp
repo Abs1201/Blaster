@@ -424,12 +424,19 @@ void ABlasterCharacter::DropOrDestroyWeapon(AWeapon* Weapon)
 
 void ABlasterCharacter::DropOrDestroyWeapons()
 {
-	if (Combat) {
-		if (Combat->EquippedWeapon) {
+	if (Combat) 
+	{
+		if (Combat->EquippedWeapon) 
+		{
 			DropOrDestroyWeapon(Combat->EquippedWeapon);
 		}
-		if (Combat->SecondaryWeapon) {
+		if (Combat->SecondaryWeapon) 
+		{
 			DropOrDestroyWeapon(Combat->SecondaryWeapon);
+		}
+		if (Combat->bHoldingTheFlag)
+		{
+			Combat->TheFlag->Dropped();
 		}
 	}
 }
