@@ -17,7 +17,6 @@ AFlag::AFlag()
 
 void AFlag::ResetFlag()
 {
-	UE_LOG(LogTemp, Warning, TEXT("AFlag::ResetFlag()"));
 
 	ABlasterCharacter* FlagBearer = Cast<ABlasterCharacter>(GetOwner());
 	if (FlagBearer)
