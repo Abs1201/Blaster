@@ -13,6 +13,7 @@ void AAmmoPickup::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	if (BlasterCharacter) {
 		UCombatComponent* Combat = BlasterCharacter->GetCombat();
 		if (Combat) {
+			//UE_LOG(LogTemp, Warning, TEXT("ammo: %d"), AmmoAmount);
 			Combat->PickupAmmo(WeaponType, AmmoAmount);
 		}
 	}
