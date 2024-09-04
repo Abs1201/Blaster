@@ -17,6 +17,7 @@ AFlag::AFlag()
 
 void AFlag::ResetFlag()
 {
+	UE_LOG(LogTemp, Warning, TEXT("AFlag::ResetFlag()"));
 
 	ABlasterCharacter* FlagBearer = Cast<ABlasterCharacter>(GetOwner());
 	if (FlagBearer)
@@ -38,6 +39,12 @@ void AFlag::ResetFlag()
 	BlasterOwnerController = nullptr;
 
 	SetActorTransform(InitialTransform);
+	MulticastResetFlag();
+}
+
+void AFlag::MulticastResetFlag_Implementation()
+{
+	SetActorTransform(InitialTransform);
 }
 
 //void AFlag::Dropped()
@@ -55,7 +62,7 @@ void AFlag::OnEquipped()
 	GetWeaponMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	GetWeaponMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 
-	EnableCustomDepth(false);
+	//EnableCustomDepth(false);
 }
 
 void AFlag::OnDropped()
@@ -68,4 +75,6 @@ void AFlag::BeginPlay()
 {
 	Super::BeginPlay();
 	InitialTransform = GetActorTransform();
+
+	EnableCustomDepth(false);
 }

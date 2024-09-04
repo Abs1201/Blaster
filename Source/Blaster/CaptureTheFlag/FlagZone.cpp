@@ -13,6 +13,7 @@ AFlagZone::AFlagZone()
 	ZoneSphere = CreateDefaultSubobject<USphereComponent>(TEXT("ZoneSphere"));
 	SetRootComponent(ZoneSphere);
 
+
 }
 
 void AFlagZone::BeginPlay()
@@ -28,6 +29,7 @@ void AFlagZone::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	AFlag* OverlappingFlag = Cast<AFlag>(OtherActor);
 	if (OverlappingFlag && OverlappingFlag->GetTeam() != Team)
 	{
+
 		ACaptureTheFlagGameMode* GameMode = GetWorld()->GetAuthGameMode<ACaptureTheFlagGameMode>();
 		if (GameMode)
 		{

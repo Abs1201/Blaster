@@ -18,6 +18,9 @@ public:
 	//virtual void Dropped() override;
 	void ResetFlag();
 
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastResetFlag();
+
 protected:
 	virtual void OnEquipped() override;
 	virtual void OnDropped() override;

@@ -15,7 +15,7 @@ void ACaptureTheFlagGameMode::FlagCaptured(AFlag* Flag, AFlagZone* Zone)
 {
 	bool bValidCaptured = Flag->GetTeam() != Zone->Team;
 	ABlasterGameState* BGameState = Cast<ABlasterGameState>(GameState);
-	if (BGameState)
+	if (BGameState && bValidCaptured)
 	{
 		if (Zone->Team == ETeam::ET_BlueTeam)
 		{
