@@ -237,6 +237,33 @@ void ABlasterPlayerController::SetHUDGrenades(int32 Grenades)
 	}
 }
 
+//void ABlasterPlayerController::SetHUDTeamScore(bool bShowTeamScore)
+//{
+//	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+//	bool bHUDValid = BlasterHUD &&
+//		BlasterHUD->CharacterOverlay &&
+//		BlasterHUD->CharacterOverlay->RedTeamScore &&
+//		BlasterHUD->CharacterOverlay->BlueTeamScore &&
+//		BlasterHUD->CharacterOverlay->ScoreSpacerText;
+//	if (bHUDValid)
+//	{
+//		if (bShowTeamScore)
+//		{
+//			InitTeamScores();
+//		}
+//		else
+//		{
+//			HideTeamScores();
+//		}
+//	}
+//	else
+//	{
+//		bInitializeShowTeamScore = true;
+//	}
+//	
+//}
+
+
 
 void ABlasterPlayerController::OnPossess(APawn* InPawn)
 {
@@ -440,7 +467,8 @@ void ABlasterPlayerController::ServerCheckMatchState_Implementation()
 		CooldownTime = GameMode->CooldownTime;
 		LevelStartingTime = GameMode->LevelStartingTime;
 		MatchState = GameMode->GetMatchState();
-		ClientJoinMidGame(MatchState, WarmupTime, MatchTime, CooldownTime, LevelStartingTime);
+		bShowTeamScores = GameMode->IsTeamsMatch();
+		ClientJoinMidGame(MatchState, WarmupTime, MatchTime, CooldownTime, LevelStartingTime, bShowTeamScores);
 
 		
 		if (BlasterHUD && MatchState == MatchState::WaitingToStart) {
@@ -450,13 +478,14 @@ void ABlasterPlayerController::ServerCheckMatchState_Implementation()
 	}
 }
 
-void ABlasterPlayerController::ClientJoinMidGame_Implementation(FName StateOfMatch, float Warmup, float Match, float Cooldown, float StartingTime)
+void ABlasterPlayerController::ClientJoinMidGame_Implementation(FName StateOfMatch, float Warmup, float Match, float Cooldown, float StartingTime, bool bIsTeamsMatch)
 {
 	WarmupTime = Warmup;
 	MatchTime = Match;
 	CooldownTime = Cooldown;
 	LevelStartingTime = StartingTime;
 	MatchState = StateOfMatch;
+	bShowTeamScores = bIsTeamsMatch;
 
 	OnMatchStateSet(MatchState);
 
@@ -528,7 +557,17 @@ void ABlasterPlayerController::PollInit()
 
 				if (bInitializeCarriedAmmo) SetHUDCarriedAmmo(HUDCarriedAmmo);
 				if (bInitializeWeaponAmmo) SetHUDWeaponAmmo(HUDWeaponAmmo);
-				//if (bInitializeTeamScore) InitTeamScores();
+
+				if (bShowTeamScores)
+				{
+					InitTeamScores();
+				}
+				else
+				{
+					HideTeamScores();
+				}
+
+				//if (bInitializeTeamScore) SetHUDTeamScore(bShowTeamScore);
 
 				ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(GetPawn());
 				if (BlasterCharacter && BlasterCharacter->GetCombat()) {
@@ -599,8 +638,6 @@ void ABlasterPlayerController::OnMatchStateSet(FName State, bool bTeamsMatch)
 	}
 }
 
-
-
 void ABlasterPlayerController::OnRep_MatchState()
 {
 	if (MatchState == MatchState::InProgress) {
@@ -622,8 +659,6 @@ void ABlasterPlayerController::OnRep_ShowTeamScores()
 		HideTeamScores();
 	}
 }
-
-
 
 void ABlasterPlayerController::HandleMatchHasStarted(bool bTeamsMatch)
 {

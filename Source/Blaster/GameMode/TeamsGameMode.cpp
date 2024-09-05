@@ -35,6 +35,15 @@ void ATeamsGameMode::PostLogin(APlayerController* NewPlayer)
 			}
 		}
 	}
+	//UE_LOG(LogTemp, Warning, TEXT("TeamsGameMode::PostLogin"));
+
+	//ABlasterPlayerController* BlasterPlayer = Cast<ABlasterPlayerController>(NewPlayer);
+
+	//if (NewPlayer)
+	//{
+	//	BlasterPlayer->OnMatchStateSet(MatchState, bTeamsMatch);
+	//}
+
 
 }
 
@@ -118,3 +127,19 @@ void ATeamsGameMode::PlayerEliminated(ABlasterCharacter* ElimmedCharacter, ABlas
 		}
 	}
 }
+
+//
+//void ATeamsGameMode::OnMatchStateSet()
+//{
+//	Super::OnMatchStateSet();
+//	UE_LOG(LogTemp, Warning, TEXT("teamsgamemode::onmatchstateset()"));
+//	//loop all controllers in game
+//	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
+//	{
+//		ABlasterPlayerController* BlasterPlayer = Cast<ABlasterPlayerController>(*It);
+//		if (BlasterPlayer) {
+//			BlasterPlayer->OnMatchStateSet(MatchState, bTeamsMatch);
+//		}
+//	}
+//
+//}

@@ -31,6 +31,7 @@ public:
 	void SetHUDAnnouncementCountdown(float CountdownTime);
 	void SetHUDTime();
 	void SetHUDGrenades(int32 Grenades);
+	//void SetHUDTeamScore(bool bShowTeamScore);
 
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaTime) override;
@@ -81,7 +82,7 @@ protected:
 	void ServerCheckMatchState();
 
 	UFUNCTION(Client, Reliable)
-	void ClientJoinMidGame(FName StateOfMatch, float Warmup, float Match, float Cooldown, float StartingTime);
+	void ClientJoinMidGame(FName StateOfMatch, float Warmup, float Match, float Cooldown, float StartingTime, bool bIsTeamsMatch);
 	
 	void HighPingWarning();
 	void StopHighPingWarning();
@@ -158,6 +159,7 @@ private:
 	
 	float HighPingRunningTime = 0.f;
 
+
 	UPROPERTY(EditAnywhere)
 	float HighPingDuration = 5.f;
 
@@ -171,4 +173,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float HighPingThreshold = 50.f;
+
+	bool bShowTeamScore = false;
+	bool bInitializeShowTeamScore = false;
 };

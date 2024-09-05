@@ -42,10 +42,13 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void OnMatchStateSet() override;
+	//virtual void PostLogin(APlayerController* NewPlayer) override;
+
 
 private:
 	float CountdownTime = 0.f;
 
 public:
 	FORCEINLINE float GetCountdownTime() const { return CountdownTime; }
+	FORCEINLINE bool IsTeamsMatch() const { return bTeamsMatch; }
 };

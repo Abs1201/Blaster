@@ -8,6 +8,7 @@
 #include "GameFramework/PlayerStart.h"
 #include "Blaster/PlayerState/BlasterPlayerState.h"
 #include "Blaster/GameState/BlasterGameState.h"
+#include "MultiplayerSessionsSubsystem.h"
 
 namespace MatchState {
 	const FName Cooldown = FName("Cooldown");
@@ -66,6 +67,22 @@ void ABlasterGameMode::OnMatchStateSet()
 	}
 
 }
+
+//void ABlasterGameMode::PostLogin(APlayerController* NewPlayer)
+//{
+//	Super::PostLogin(NewPlayer);
+//
+//	int32 NumberOfPlayers = GameState.Get()->PlayerArray.Num();
+//	UE_LOG(LogTemp, Warning, TEXT("number of players: %d"), NumberOfPlayers);
+//	UE_LOG(LogTemp, Warning, TEXT("BlasterGameMode::PostLogin"));
+//
+//	ABlasterPlayerController* BlasterPlayer = Cast<ABlasterPlayerController>(NewPlayer);
+//
+//	if (NewPlayer)
+//	{
+//		BlasterPlayer->OnMatchStateSet(MatchState, bTeamsMatch);
+//	}
+//}
 
 ABlasterGameMode::ABlasterGameMode()
 {
