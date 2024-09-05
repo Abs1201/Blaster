@@ -33,7 +33,7 @@ UCombatComponent::UCombatComponent()
 void UCombatComponent::PickupAmmo(EWeaponType WeaponType, int32 AmmoAmount)
 {
 	if (CarriedAmmoMap.Contains(WeaponType)) {
-		CarriedAmmoMap[WeaponType] += FMath::Clamp(CarriedAmmoMap[WeaponType] + AmmoAmount, 0, MaxCarriedAmmo);
+		CarriedAmmoMap[WeaponType] = FMath::Clamp(CarriedAmmoMap[WeaponType] + AmmoAmount, 0, MaxCarriedAmmo);
 
 		UpdateCarriedAmmo();
 	}
@@ -594,11 +594,13 @@ void UCombatComponent::AttachActorToBackpack(AActor* ActorToAttach)
 void UCombatComponent::UpdateCarriedAmmo()
 {
 	if (EquippedWeapon == nullptr) return;
-	if (CarriedAmmoMap.Contains(EquippedWeapon->GetWeaponType())) {
+	if (CarriedAmmoMap.Contains(EquippedWeapon->GetWeaponType())) 
+	{
 		CarriedAmmo = CarriedAmmoMap[EquippedWeapon->GetWeaponType()];
 	}
 	Controller = Controller == nullptr ? Cast<ABlasterPlayerController>(Character->Controller) : Controller;
-	if (Controller) {
+	if (Controller) 
+	{
 		Controller->SetHUDCarriedAmmo(CarriedAmmo);
 		//Controller->SetHUDWeaponType(
 	}
