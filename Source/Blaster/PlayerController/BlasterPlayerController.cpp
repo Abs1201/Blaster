@@ -17,6 +17,20 @@
 #include "Components/Image.h"
 #include "Blaster/HUD/ReturnToMainMenu.h"
 #include "Blaster/BlasterTypes/Announcement.h"
+#include "Blaster/Weapon/WeaponTypes.h"
+
+//void ABlasterPlayerController::SetHUDWeaponType()
+//{
+//	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+//	bool bHUDValid = BlasterHUD &&
+//		BlasterHUD->CharacterOverlay &&
+//		BlasterHUD->CharacterOverlay->WeaponTypeText;
+//
+//	if (Combat == nullptr || Combat->EquippedWeapon == nullptr) return;
+//
+//
+//}
+
 
 void ABlasterPlayerController::SetHUDHealth(float Health, float MaxHealth)
 {
@@ -236,6 +250,8 @@ void ABlasterPlayerController::SetHUDGrenades(int32 Grenades)
 		HUDGrenades = Grenades;
 	}
 }
+
+
 
 //void ABlasterPlayerController::SetHUDTeamScore(bool bShowTeamScore)
 //{

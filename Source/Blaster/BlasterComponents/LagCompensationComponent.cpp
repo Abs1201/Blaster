@@ -8,6 +8,7 @@
 #include "Blaster/Blaster.h"
 
 #include "DrawDebugHelpers.h"
+#include "Blaster/PlayerState/BlasterPlayerState.h"
 
 
 ULagCompensationComponent::ULagCompensationComponent()
@@ -570,6 +571,7 @@ void ULagCompensationComponent::SaveFramePackage()
 void ULagCompensationComponent::SaveFramePackage(FFramePackage& OutPackage)
 {
 	Character = Character == nullptr ? Cast<ABlasterCharacter>(GetOwner()) : Character;
+
 	if (Character) {
 		OutPackage.Time = GetWorld()->GetTimeSeconds();
 		OutPackage.Character = Character;

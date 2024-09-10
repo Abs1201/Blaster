@@ -16,5 +16,8 @@ class BLASTER_API ABlasterSwatGuy : public ABlasterCharacter
 
 public:
 	ABlasterSwatGuy();
+
+protected:
+	void AddHitCollisionBox();
 	
 };

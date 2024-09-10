@@ -16,5 +16,7 @@ class BLASTER_API ABlasterCharacterA : public ABlasterCharacter
 	
 public:
 	ABlasterCharacterA();
-	
+
+protected:
+	void AddHitCollisionBox();
 };

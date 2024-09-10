@@ -4,15 +4,24 @@
 #include "BlasterCharacterA.h"
 #include "Components/BoxComponent.h"
 #include <Blaster/Blaster.h>
-
+#include "Blaster/BlasterComponents/LagCompensationComponent.h"
 
 ABlasterCharacterA::ABlasterCharacterA()
 {
-	/*
+	AddHitCollisionBox();
+}
+
+void ABlasterCharacterA::AddHitCollisionBox()
+{
+
+	UE_LOG(LogTemp, Warning, TEXT("BlasterCharacterA::AddHitCollisionBox()"));
+
+
+	/**
 	* Hit boxes for server-side rewind
 	*/
 
-	head = CreateDefaultSubobject<UBoxComponent>(TEXT("head"));
+	/*head = CreateDefaultSubobject<UBoxComponent>(TEXT("head"));
 	head->SetupAttachment(GetMesh(), FName("head"));
 	HitCollisionBoxes.Add(FName("head"), head);
 
@@ -84,12 +93,17 @@ ABlasterCharacterA::ABlasterCharacterA()
 	foot_r->SetupAttachment(GetMesh(), FName("foot_r"));
 	HitCollisionBoxes.Add(FName("foot_r"), foot_r);
 
-	for (auto& Box : HitCollisionBoxes) {
-		if (Box.Value) {
+	for (auto Box : HitCollisionBoxes)
+	{
+		if (Box.Value)
+		{
 			Box.Value->SetCollisionObjectType(ECC_HitBox);
 			Box.Value->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 			Box.Value->SetCollisionResponseToChannel(ECC_HitBox, ECollisionResponse::ECR_Block);
 			Box.Value->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		}
 	}
+
+	LagCompensation = CreateDefaultSubobject<ULagCompensationComponent>(TEXT("LagCompensation"));*/
+
 }

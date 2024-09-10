@@ -32,6 +32,7 @@ public:
 	void SetHUDTime();
 	void SetHUDGrenades(int32 Grenades);
 	//void SetHUDTeamScore(bool bShowTeamScore);
+	void SetHUDWeaponType();
 
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaTime) override;

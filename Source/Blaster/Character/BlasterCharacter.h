@@ -14,7 +14,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLeftGame);
 
-UCLASS(Abstract)
+UCLASS()
 class BLASTER_API ABlasterCharacter : public ACharacter, public IInteractWithCrosshairsInterface
 {
 	GENERATED_BODY()
@@ -177,7 +177,10 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* foot_r;
 
+	UPROPERTY(VisibleAnywhere)
+	class ULagCompensationComponent* LagCompensation;
 
+	//virtual void AddHitCollisionBox();
 
 
 private:
@@ -207,8 +210,7 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UBuffComponent* Buff;
 
-	UPROPERTY(VisibleAnywhere)
-	class ULagCompensationComponent* LagCompensation;
+
 
 	UFUNCTION(Server, Reliable)
 	void ServerEquipButtonPressed();
