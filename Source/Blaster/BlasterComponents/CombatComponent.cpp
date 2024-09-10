@@ -642,6 +642,8 @@ void UCombatComponent::OnRep_EquippedWeapon()
 		Character->bUseControllerRotationYaw = true;
 		PlayEquipWeaponSound(EquippedWeapon);
 		EquippedWeapon->SetHUDAmmo();
+
+		Character->UpdateHUDWeaponType();
 	}
 }
 

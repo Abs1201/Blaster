@@ -19,17 +19,24 @@
 #include "Blaster/BlasterTypes/Announcement.h"
 #include "Blaster/Weapon/WeaponTypes.h"
 
-//void ABlasterPlayerController::SetHUDWeaponType()
-//{
-//	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
-//	bool bHUDValid = BlasterHUD &&
-//		BlasterHUD->CharacterOverlay &&
-//		BlasterHUD->CharacterOverlay->WeaponTypeText;
-//
-//	if (Combat == nullptr || Combat->EquippedWeapon == nullptr) return;
-//
-//
-//}
+void ABlasterPlayerController::SetHUDWeaponType(FString WeaponType)
+{
+	UE_LOG(LogTemp, Warning, TEXT("PC::SetHUDWeaponType()"));
+	
+	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+	bool bHUDValid = BlasterHUD &&
+		BlasterHUD->CharacterOverlay &&
+		BlasterHUD->CharacterOverlay->WeaponTypeText;
+
+	if (bHUDValid) {
+		BlasterHUD->CharacterOverlay->WeaponTypeText->SetText(FText::FromString(WeaponType));
+	}
+	else {
+		bInitializeHealth = true;
+		HUDWeaponType = WeaponType;
+	}
+
+}
 
 
 void ABlasterPlayerController::SetHUDHealth(float Health, float MaxHealth)
@@ -573,6 +580,8 @@ void ABlasterPlayerController::PollInit()
 
 				if (bInitializeCarriedAmmo) SetHUDCarriedAmmo(HUDCarriedAmmo);
 				if (bInitializeWeaponAmmo) SetHUDWeaponAmmo(HUDWeaponAmmo);
+				if (bInitializeWeaponType) SetHUDWeaponType(HUDWeaponType);
+
 
 				if (bShowTeamScores)
 				{

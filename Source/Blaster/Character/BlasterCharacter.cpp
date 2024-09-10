@@ -630,11 +630,46 @@ void ABlasterCharacter::BeginPlay()
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDHealth);
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDShield);
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDGrenade);
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABlasterCharacter::UpdateHUDWeaponType);
 
 	
+}
 
+void ABlasterCharacter::UpdateHUDWeaponType()
+{
+	BlasterPlayerController = BlasterPlayerController == nullptr ? Cast<ABlasterPlayerController>(Controller) : BlasterPlayerController;
+	if (BlasterPlayerController) {
 
-	
+		if (Combat == nullptr || Combat->EquippedWeapon == nullptr) return;
+
+		FString WeaponType;
+		switch (Combat->EquippedWeapon->GetWeaponType()) {
+		case EWeaponType::EWT_AssaultRifle:
+			WeaponType = "AR";
+			break;
+			//TODO: Reload montage revise.
+		case EWeaponType::EWT_RocketLauncher:
+			WeaponType = "RL";
+			break;
+		case EWeaponType::EWT_Pistol:
+			WeaponType = "Pistol";
+			break;
+		case EWeaponType::EWT_SubmachineGun:
+			WeaponType = "SMG";
+			break;
+		case EWeaponType::EWT_Shotgun:
+			WeaponType = "SG";
+			break;
+		case EWeaponType::EWT_SniperRifle:
+			WeaponType = "SR";
+			break;
+		case EWeaponType::EWT_GrenadeLauncher:
+			WeaponType = "GL";
+			break;
+		}
+
+		BlasterPlayerController->SetHUDWeaponType(WeaponType);
+	}
 }
 
 void ABlasterCharacter::UpdateHUDHealth()
@@ -821,6 +856,20 @@ void ABlasterCharacter::EquipButtonPressed()
 			bFinishedSwapping = false;
 		}
 	}
+	UpdateHUDWeaponType();
+
+}
+void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
+{
+	if (Combat) {
+		if (OverlappingWeapon) {
+
+			Combat->EquipWeapon(OverlappingWeapon);
+		}
+		else if (Combat->ShouldSwapWeapon()) {
+			Combat->SwapWeapons();
+		}
+	}
 }
 
 void ABlasterCharacter::RunButtonPressed()
@@ -877,18 +926,7 @@ void ABlasterCharacter::ServerRun_Implementation(bool bPressed)
 	Run(bPressed);
 }
 
-void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
-{
-	if (Combat) {
-		if (OverlappingWeapon) {
 
-			Combat->EquipWeapon(OverlappingWeapon);
-		}
-		else if (Combat->ShouldSwapWeapon()) {
-			Combat->SwapWeapons();
-		}
-	}
-}
 
 void ABlasterCharacter::CrouchButtonPressed()
 {

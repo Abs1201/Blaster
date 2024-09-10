@@ -32,7 +32,7 @@ public:
 	void SetHUDTime();
 	void SetHUDGrenades(int32 Grenades);
 	//void SetHUDTeamScore(bool bShowTeamScore);
-	void SetHUDWeaponType();
+	void SetHUDWeaponType(FString WeaponType);
 
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaTime) override;
@@ -134,6 +134,10 @@ private:
 
 	UPROPERTY()
 	class UCharacterOverlay* CharacterOverlay;
+
+	bool bInitializeWeaponType = false;
+	FString HUDWeaponType;
+
 	bool bInitializeHealth = false;
 	float HUDHealth;
 	float HUDMaxHealth;
