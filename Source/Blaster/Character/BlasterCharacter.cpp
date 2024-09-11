@@ -75,6 +75,8 @@ ABlasterCharacter::ABlasterCharacter()
 	AttachedGrenade->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 
+
+
 	/*
 	* Hit boxes for server-side rewind
 	*/

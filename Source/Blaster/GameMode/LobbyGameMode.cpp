@@ -25,17 +25,23 @@ void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 				FString MatchType = Subsystem->DesiredMatchType;
 				if (MatchType == "FreeForAll")
 				{
-					World->ServerTravel(FString("/Game/Maps/BlasterMap?listen"));
+					//World->ServerTravel(FString("/Game/Maps/BlasterMap?listen"));
+					World->ServerTravel(FString("/Game/Maps/VikingMap/BlasterMap_Viking?listen"));
+
 
 				}
 				else if (MatchType == "Teams")
 				{
-					World->ServerTravel(FString("/Game/Maps/Teams?listen"));
+					//World->ServerTravel(FString("/Game/Maps/Teams?listen"));
+					World->ServerTravel(FString("/Game/Maps/VikingMap/TeamsMap_Viking?listen"));
+
 
 				}
 				else if (MatchType == "CTF")
 				{
-					World->ServerTravel(FString("/Game/Maps/CaptureTheFlag?listen"));
+					//World->ServerTravel(FString("/Game/Maps/CaptureTheFlag?listen"));
+					World->ServerTravel(FString("/Game/Maps/VikingMap/FlagMap_Viking?listen"));
+
 
 				}
 
