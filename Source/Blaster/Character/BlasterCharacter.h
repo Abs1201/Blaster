@@ -109,7 +109,7 @@ protected:
 	void ServerRun(bool bPressed);
 	void ReloadButtonPressed();
 	void GrenadeButtonPressed();
-	//void SwapButtonPressed();
+	void SwapWeapon(float Value);
 
 	void DropOrDestroyWeapon(AWeapon* Weapon);
 	void DropOrDestroyWeapons();
@@ -216,6 +216,9 @@ private:
 
 	UFUNCTION(Server, Reliable)
 	void ServerEquipButtonPressed();
+
+	UFUNCTION(Server, Reliable)
+	void ServerSwapWeapon();
 
 	float AO_Yaw;
 	float InterpAO_Yaw;

@@ -21,8 +21,6 @@
 
 void ABlasterPlayerController::SetHUDWeaponType(FString WeaponType)
 {
-	UE_LOG(LogTemp, Warning, TEXT("PC::SetHUDWeaponType()"));
-	
 	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
 	bool bHUDValid = BlasterHUD &&
 		BlasterHUD->CharacterOverlay &&

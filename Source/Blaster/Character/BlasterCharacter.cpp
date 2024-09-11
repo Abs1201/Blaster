@@ -814,6 +814,7 @@ void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("Reload", IE_Released, this, &ABlasterCharacter::ReloadButtonPressed);
 	PlayerInputComponent->BindAction("ThrowGrenade", IE_Pressed, this, &ABlasterCharacter::GrenadeButtonPressed);
 
+	PlayerInputComponent->BindAxis("SwapWeapon", this, &ABlasterCharacter::SwapWeapon);
 
 }
 
@@ -855,16 +856,6 @@ void ABlasterCharacter::EquipButtonPressed()
 	if (Combat) {
 		if (Combat->bHoldingTheFlag) return;
 		if(Combat->CombatState == ECombatState::ECS_Unoccupied) ServerEquipButtonPressed();
-		bool bSwap = 
-			Combat->ShouldSwapWeapon() &&
-			!HasAuthority() &&
-			Combat->CombatState == ECombatState::ECS_Unoccupied &&
-			OverlappingWeapon == nullptr;
-		if (bSwap) {
-			PlaySwapMontage();
-			Combat->CombatState = ECombatState::ECS_SwappingWeapons;
-			bFinishedSwapping = false;
-		}
 	}
 	UpdateHUDWeaponType();
 
@@ -873,10 +864,33 @@ void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
 {
 	if (Combat) {
 		if (OverlappingWeapon) {
-
 			Combat->EquipWeapon(OverlappingWeapon);
 		}
-		else if (Combat->ShouldSwapWeapon()) {
+	}
+}
+
+void ABlasterCharacter::SwapWeapon(float Value)
+{
+	if (bDisableGameplay) return;
+	if (Controller != nullptr && FMath::Abs(Value) >= 0.9f && Combat) {
+		if (Combat->bHoldingTheFlag) return;
+		if (Combat->CombatState == ECombatState::ECS_Unoccupied) ServerSwapWeapon();
+		bool bSwap =
+			Combat->ShouldSwapWeapon() &&
+			!HasAuthority() &&
+			Combat->CombatState == ECombatState::ECS_Unoccupied;
+		if (bSwap) {
+			PlaySwapMontage();
+			Combat->CombatState = ECombatState::ECS_SwappingWeapons;
+			bFinishedSwapping = false;
+		}
+	}
+	UpdateHUDWeaponType();
+}
+void ABlasterCharacter::ServerSwapWeapon_Implementation()
+{
+	if (Combat) {
+		if (Combat->ShouldSwapWeapon()) {
 			Combat->SwapWeapons();
 		}
 	}
@@ -1079,10 +1093,6 @@ void ABlasterCharacter::FireButtonReleased()
 	}
 }
 
-
-
-
-
 void ABlasterCharacter::ReloadButtonPressed()
 {
 	if (bDisableGameplay) return;
@@ -1103,10 +1113,7 @@ void ABlasterCharacter::GrenadeButtonPressed()
 	}
 }
 
-//void ABlasterCharacter::SwapButtonPressed()
-//{
-//
-//}
+
 
 void ABlasterCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatorController, AActor* DamageCauser)
 {
@@ -1140,6 +1147,8 @@ void ABlasterCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const 
 	}
 
 }
+
+
 
 
 
