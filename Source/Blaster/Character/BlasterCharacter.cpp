@@ -44,6 +44,8 @@ ABlasterCharacter::ABlasterCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
+	IsThirdView = true;
+
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(400.f, 400.f, 0.f);
@@ -813,6 +815,7 @@ void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &ABlasterCharacter::RunButtonReleased);
 	PlayerInputComponent->BindAction("Reload", IE_Released, this, &ABlasterCharacter::ReloadButtonPressed);
 	PlayerInputComponent->BindAction("ThrowGrenade", IE_Pressed, this, &ABlasterCharacter::GrenadeButtonPressed);
+	PlayerInputComponent->BindAction("ChangePOV", IE_Pressed, this, &ABlasterCharacter::ChangePOVButtonPressed);
 
 	PlayerInputComponent->BindAxis("SwapWeapon", this, &ABlasterCharacter::SwapWeapon);
 
@@ -867,6 +870,16 @@ void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
 			Combat->EquipWeapon(OverlappingWeapon);
 		}
 	}
+}
+
+void ABlasterCharacter::ChangePOVButtonPressed()
+{
+	if (IsThirdView)
+	{
+		CameraBoom->TargetArmLength = 0.f;
+
+	}
+	
 }
 
 void ABlasterCharacter::SwapWeapon(float Value)

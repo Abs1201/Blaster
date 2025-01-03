@@ -109,6 +109,8 @@ protected:
 	void ServerRun(bool bPressed);
 	void ReloadButtonPressed();
 	void GrenadeButtonPressed();
+
+	void ChangePOVButtonPressed();
 	void SwapWeapon(float Value);
 
 	void DropOrDestroyWeapon(AWeapon* Weapon);
@@ -400,7 +402,7 @@ private:
 	UPROPERTY()
 	class ABlasterGameMode* BlasterGameMode;
 
-
+	bool IsThirdView = true;
 
 public:	
 	//getter, setter
