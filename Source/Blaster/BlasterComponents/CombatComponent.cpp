@@ -187,7 +187,7 @@ void UCombatComponent::FireShotgun()
 
 void UCombatComponent::TraceUnderCrosshairs(FHitResult& TraceHitResult)
 {
-	FVector2D ViewportSize;
+	FVector2D ViewportSize = FVector2D(0.f, 0.f);
 	if (GEngine && GEngine->GameViewport) {
 		GEngine->GameViewport->GetViewportSize(ViewportSize);
 	}

@@ -14,7 +14,8 @@ void UReturnToMainMenu::MenuSetup()
 	UE_LOG(LogTemp, Warning, TEXT("menu setup"));
 	AddToViewport();
 	SetVisibility(ESlateVisibility::Visible);
-	bIsFocusable = true;
+	//bIsFocusable = true;
+	SetIsFocusable(true);
 
 	UWorld* World = GetWorld();
 	if(World)
