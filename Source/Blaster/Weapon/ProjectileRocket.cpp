@@ -68,8 +68,13 @@ void AProjectileRocket::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, 
 	if (CollisionBox) {
 		CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
-	if (TrailSystemComponent && TrailSystemComponent->GetSystemInstance()) {
-		TrailSystemComponent->GetSystemInstance()->Deactivate();
+	// Replace this line:
+	// TrailSystemComponent->GetSystemInstance()->Deactivate();
+
+	// With this safe check and call:
+	if (TrailSystemComponent)
+	{
+		TrailSystemComponent->Deactivate();
 	}
 	if (ProjectileLoopComponent && ProjectileLoopComponent->IsPlaying()) {
 		ProjectileLoopComponent->Stop();

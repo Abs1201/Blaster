@@ -313,7 +313,8 @@ void ABlasterPlayerController::CheckPing(float DeltaTime)
 {
 	HighPingRunningTime += DeltaTime;
 	if (HighPingRunningTime > CheckPingFrequency) {
-		PlayerState = PlayerState == nullptr ? GetPlayerState<APlayerState>() : PlayerState;
+		//PlayerState = PlayerState == nullptr ? GetPlayerState<APlayerState>() : PlayerState;
+		PlayerState = PlayerState == nullptr ? TObjectPtr<APlayerState>(GetPlayerState<APlayerState>()) : PlayerState;
 		if (PlayerState) {
 			//UE_LOG(LogTemp, Warning, TEXT("Ping: %d"), PlayerState->GetPing() * 4);
 			if (PlayerState->GetCompressedPing() * 4 > HighPingThreshold) { // ping is compressed; it's actually ping / 4
@@ -363,8 +364,6 @@ void ABlasterPlayerController::ShowReturnToMainMenu()
 	}
 
 }
-
-
 
 
 
